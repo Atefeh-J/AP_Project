@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/images">
+        <file>signin.jpg</file>
+        <file>gamename.jpg</file>
+        <file>sign.jpg</file>
+        <file>table.png</file>
+    </qresource>
+</RCC>

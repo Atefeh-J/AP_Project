@@ -1,0 +1,10 @@
+.obj/editwindow.o
+.obj/editwindow.o
+.obj/editwindow.o
+.obj/forgotpswwindow.o
+.obj/main.o
+.obj/client.o
+.obj/menuwindow.o
+.obj/signinwindow.o
+.obj/signupwindow.o
+.obj/qrc_images.o

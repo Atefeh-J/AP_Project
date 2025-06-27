@@ -1,0 +1,22 @@
+<RCC>
+    <qresource prefix="/images">
+        <file>background.jpeg</file>
+        <file>background2.jpg</file>
+        <file>welcome_text.jpg</file>
+    </qresource>
+    <qresource prefix="/cards">
+        <file>Dimond-2.JPG</file>
+        <file>Dimond-3.JPG</file>
+        <file>Dimond-4.JPG</file>
+        <file>Dimond-5.JPG</file>
+        <file>Dimond-6.JPG</file>
+        <file>Dimond-7.JPG</file>
+        <file>Dimond-8.JPG</file>
+        <file>Dimond-9.JPG</file>
+        <file>Dimond-10.JPG</file>
+        <file>Dimond-14.JPG</file>
+        <file>Dimond-13.JPG</file>
+        <file>Dimond-12.JPG</file>
+        <file>Dimond-11.JPG</file>
+    </qresource>
+</RCC>

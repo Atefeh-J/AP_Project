@@ -1,0 +1,1 @@
+build*/\n*.o\n*.obj\n*.exe\n*.dll\n*.user\n*.pro.user\n*.autosave\nmoc_*.cpp\nui_*.h\nqrc_*.cpp\nCMakeFiles/\nCMakeCache.txt\nMakefile\n*.out\n*.bak\n*~

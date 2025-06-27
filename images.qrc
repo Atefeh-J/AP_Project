@@ -4,5 +4,8 @@
         <file>gamename.jpg</file>
         <file>sign.jpg</file>
         <file>table.png</file>
+        <file>menu.jpg</file>
+        <file>history.jpg</file>
+        <file>edit.jpg</file>
     </qresource>
 </RCC>

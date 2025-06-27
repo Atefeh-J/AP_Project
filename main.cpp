@@ -25,11 +25,12 @@
 //     return a.exec();
 // }
 #include <QApplication>
-#include "SigninWindow.h"  // فرض می‌کنیم کلاس بالا در فایل جدا به نام SigninWindow.h و .cpp هست
-#include "forgotpswwindow.h" // در بالای main.cpp اضافه کنید
+#include "SigninWindow.h"
+#include "forgotpswwindow.h"
 #include"menuwindow.h"
 #include"signupwindow.h"
 #include"editwindow.h"
+#include "beginwindow.h"
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
@@ -37,7 +38,8 @@ int main(int argc, char *argv[])
    ///SigninWindow w;
     //Forgotpswwindow w;
     //Menuwindow w;
-    Editwindow w;
+    //Editwindow w;
+    Beginwindow w;
     w.show();
 
     return a.exec();

@@ -1,6 +1,7 @@
 #ifndef Menuwindow_H
 #define Menuwindow_H
 
+#include <QMainWindow>
 #include <QWidget>
 #include <QLabel>
 #include <QKeyEvent>
@@ -13,25 +14,32 @@
 #include <QTextEdit>
 #include <QPushButton>
 #include <QVBoxLayout>
-class Menuwindow : public QWidget
+
+#include "signinwindow.h"
+#include "forgotpswwindow.h"
+#include"menuwindow.h"
+#include"signupwindow.h"
+#include"editwindow.h"
+#include "mainwindow.h"
+#include "beginwindow.h"
+class Menuwindow : public MainWindow
 {
-    //QLabel* playerp;
-    //Player player;
-    QPixmap background;
-    //QMovie* playerGif;
+    Q_OBJECT
+
     QLabel *Lpagename;
     QPushButton *pbnstartgame;
     QPushButton *pbneditinformation;
     QPushButton *pbnhistory;
     QPushButton *pbnsignout;
     QLabel *Lerror;
-    //QVBoxLayout *mainLayout;
 
 public:
-    Menuwindow(QWidget *parent = nullptr);
+    Menuwindow(QString imagename=":/images/menu.jpg" ,MainWindow *parent = nullptr);
     ~Menuwindow();
+    virtual void setObjects()override;
+public slots:
+    virtual void readInfo()override;
+    virtual void gotowindow(int choice) override;
 
-protected:
-    void paintEvent(QPaintEvent* event) override;
 };
 #endif // Menuwindow_H

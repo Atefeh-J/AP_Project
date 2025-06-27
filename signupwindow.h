@@ -1,6 +1,7 @@
-#ifndef SIGNINWOTDOW_H
-#define SIGNINWOTDOW_H
+#ifndef Signupwindow_H
+#define Signupwindow_H
 
+#include <QMainWindow>
 #include <QWidget>
 #include <QLabel>
 #include <QKeyEvent>
@@ -13,12 +14,17 @@
 #include <QTextEdit>
 #include <QPushButton>
 #include <QVBoxLayout>
-class Signupwindow : public QWidget
+
+#include "signinwindow.h"
+#include "forgotpswwindow.h"
+#include"menuwindow.h"
+#include"signupwindow.h"
+#include"editwindow.h"
+#include "mainwindow.h"
+class Signupwindow : public MainWindow
 {
-    //QLabel* playerp;
-    //Player player;
-    QPixmap background;
-    //QMovie* playerGif;
+    Q_OBJECT
+
     QLabel *Lpagename;
     QLabel *Lusername;
     QLabel *Lname;
@@ -36,13 +42,14 @@ class Signupwindow : public QWidget
 
     QPushButton *pbnsignup;
     QLabel *Lerror;
-    //QVBoxLayout *mainLayout;
 
 public:
-    Signupwindow(QWidget *parent = nullptr);
+    Signupwindow(QString imagename=":/images/sign.jpg" ,MainWindow *parent = nullptr);
     ~Signupwindow();
+    virtual void setObjects()override;
+public slots:
+    virtual void readInfo()override;
+    virtual void gotowindow(int choice) override;
 
-protected:
-    void paintEvent(QPaintEvent* event) override;
 };
 #endif // Signupwindow_H

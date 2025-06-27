@@ -9,18 +9,24 @@ CONFIG += link_pkgconfig
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    beginwindow.cpp \
     editwindow.cpp \
+    exceptions.cpp \
     forgotpswwindow.cpp \
     main.cpp \
     client.cpp \
+    mainwindow.cpp \
     menuwindow.cpp \
     signinwindow.cpp \
     signupwindow.cpp
 
 HEADERS += \
+    beginwindow.h \
     client.h \
     editwindow.h \
+    exceptions.h \
     forgotpswwindow.h \
+    mainwindow.h \
     menuwindow.h \
     signinwindow.h \
     signupwindow.h
@@ -37,3 +43,5 @@ OBJECTS_DIR = .obj
 
 RESOURCES += \
     images.qrc
+
+ QT += widgets

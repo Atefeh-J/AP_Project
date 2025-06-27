@@ -13,12 +13,16 @@
 #include <QTextEdit>
 #include <QPushButton>
 #include <QVBoxLayout>
-class SigninWindow : public QWidget
+
+#include "forgotpswwindow.h"
+#include"menuwindow.h"
+#include"signupwindow.h"
+#include"editwindow.h"
+#include"mainwindow.h"
+class SigninWindow : public MainWindow
 {
-    //QLabel* playerp;
-    //Player player;
-    QPixmap background;
-    //QMovie* playerGif;
+    Q_OBJECT
+
     QLabel *Lpagename;
     QLabel *Lusername;
     QLabel *Lpassword;
@@ -27,13 +31,13 @@ class SigninWindow : public QWidget
     QPushButton *pbnforgotpass;
     QPushButton *pbnsign;
     QLabel *Lerror;
-    //QVBoxLayout *mainLayout;
 
 public:
-    SigninWindow(QWidget *parent = nullptr);
+    SigninWindow(QString imagename=":/images/sign.jpg" ,MainWindow *parent = nullptr);
     ~SigninWindow();
-
-protected:
-    void paintEvent(QPaintEvent* event) override;
+    virtual void setObjects()override;
+public slots:
+    virtual void readInfo()override;
+    virtual void gotowindow(int choice) override;
 };
 #endif // SIGNINWINDOW_H

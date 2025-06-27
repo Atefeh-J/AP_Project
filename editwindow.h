@@ -1,6 +1,7 @@
-#ifndef EDITWINDOW_H
-#define EDITWINDOW_H
+#ifndef Editwindow_H
+#define Editwindow_H
 
+#include <QMainWindow>
 #include <QWidget>
 #include <QLabel>
 #include <QKeyEvent>
@@ -13,12 +14,17 @@
 #include <QTextEdit>
 #include <QPushButton>
 #include <QVBoxLayout>
-class Editwindow : public QWidget
+
+#include "signinwindow.h"
+#include "forgotpswwindow.h"
+#include"menuwindow.h"
+#include"signupwindow.h"
+#include"editwindow.h"
+#include "mainwindow.h"
+class Editwindow : public MainWindow
 {
-    //QLabel* playerp;
-    //Player player;
-    QPixmap background;
-    //QMovie* playerGif;
+    Q_OBJECT
+
     QLabel *Lpagename;
     QLabel *Lusername;
     QLabel *Lname;
@@ -36,13 +42,14 @@ class Editwindow : public QWidget
 
     QPushButton *pbnsignup;
     QLabel *Lerror;
-    //QVBoxLayout *mainLayout;
 
 public:
-    Editwindow(QWidget *parent = nullptr);
+    Editwindow(QString imagename=":/images/edit.jpg" ,MainWindow *parent = nullptr);
     ~Editwindow();
+    virtual void setObjects()override;
+public slots:
+    virtual void readInfo()override;
+    virtual void gotowindow(int choice) override;
 
-protected:
-    void paintEvent(QPaintEvent* event) override;
 };
-#endif // EDITWINDOW_H
+#endif // Editwindow_H

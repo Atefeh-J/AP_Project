@@ -1,66 +1,21 @@
-#include"editwindow.h"
-Editwindow::Editwindow(QWidget *parent) : QWidget(parent)
+#include "Editwindow.h"
+Editwindow::Editwindow(QString imagename ,MainWindow *parent) : MainWindow(imagename,parent)
 {
-    setFixedSize(1500, 750);
-    // background = QPixmap(":/images/signin.jpg");
-    // QTransform transform;
-    // transform.rotate(90); // چرخش 90 درجه ساعتگرد
-    // background = background.transformed(transform, Qt::SmoothTransformation);
 
-    // چرخش تصویر
-    background = QPixmap(":/images/sign.jpg");
-    // QTransform transform;
-    // transform.rotate(90);
-    // background = background.transformed(transform, Qt::SmoothTransformation);
+    setObjects();
 
-    // کاهش شفافیت
-    // QPixmap semiTransparentBg(background.size());
-    // semiTransparentBg.fill(Qt::transparent);
-    // QPainter p(&semiTransparentBg);
-    // p.setOpacity(0.85); // 85% مات
-    // p.drawPixmap(0, 0, background);
-    // p.end();
-    // background = semiTransparentBg;
-    //نام بازی
-    QLabel *gamenameL= new QLabel(this);
-    QPixmap  gamenameP(":/images/gamename.jpg");
-    gamenameP = gamenameP.scaledToWidth(400, Qt::SmoothTransformation);
-    gamenameL->setGeometry(550, 100, gamenameP.width(), gamenameP.height());
-    gamenameL->setPixmap(gamenameP);
-    //جدول
-    QLabel *tableL = new QLabel(this);
-    QPixmap tableP(":/images/table.png");
-    tableP = tableP.scaledToWidth(400, Qt::SmoothTransformation);
-    tableL->setGeometry(550, 180, 400, 450);
-    tableL->setPixmap(tableP);
+}
+Editwindow::~Editwindow()
+{}
 
-    // تنظیم شفافیت 40% (60% opacity)
-    QGraphicsOpacityEffect *opacityEffect = new QGraphicsOpacityEffect;
-    opacityEffect->setOpacity(0.4); // مقدار بین 0 (کاملاً شفاف) تا 1 (کاملاً مات)
-    tableL->setGraphicsEffect(opacityEffect);
+void Editwindow::setObjects()
+{
+    QTransform transform;
+    transform.rotate(90);
+    background = background.transformed(transform, Qt::SmoothTransformation);
 
-    // برای پس‌زمینه شفاف
-    tableL->setAttribute(Qt::WA_TranslucentBackground);
-    tableL->setStyleSheet("background: transparent;");
-
-    QLabel *Lpagename;
-    QLabel *Lusername;
-    QLabel *Lname;
-    QLabel *Llastname;
-    QLabel *Lemail;
-    QLabel *Lphone;
-    QLabel *Lpassword;
-
-    QTextEdit *txtusername;
-    QTextEdit *txtname;
-    QTextEdit *txtlastname;
-    QTextEdit *txtemail;
-    QTextEdit *txtphone;
-    QTextEdit *txtpassword;
-
-    QPushButton *pbnsignup;
-
-    Lpagename = new QLabel("sign in", this);
+    // تنظیم موقعیت و اندازه مناسب
+    Lpagename = new QLabel("edit information", this);
     Lusername = new QLabel("enter your new username", this);
     Lpassword = new QLabel("enter your new password", this);
     Lname = new QLabel("enter your new name" ,this);
@@ -99,15 +54,33 @@ Editwindow::Editwindow(QWidget *parent) : QWidget(parent)
     pbnsignup->setStyleSheet("color: white; background: red;");
     Lerror->setStyleSheet("color: red;");
 
+    //     connect(pbnsignup,SIGNAL(clicked()),this,SLOT(readInfo()));
+    connect(pbnsignup, &QPushButton::clicked, this, [this]() {
+        gotowindow(1);
+    });
 }
-Editwindow::~Editwindow()
-{}
-void Editwindow:: paintEvent(QPaintEvent* event)
+void Editwindow::readInfo()
 {
-    QPainter painter(this);
-    painter.drawPixmap(0, 0, width(), height(), background);
+    QString username= txtusername->toPlainText();
+    QString password= txtpassword->toPlainText();
+    QString name= txtname->toPlainText();
+    QString lastname= txtlastname->toPlainText();
+    QString email= txtemail->toPlainText();
+    QString phone= txtpassword->toPlainText();
+}
 
-    //map.displaymap(this);
+void Editwindow::gotowindow(int choice)
+{
+    switch(choice)
+    {
+    case 1:
+    {
+        {
+            Menuwindow *n = new Menuwindow();
+            n->show();
+            this->close();
+        }
+    }
+    }
 
-    QWidget::paintEvent(event);
 }

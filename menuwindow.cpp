@@ -1,47 +1,18 @@
-#include"menuwindow.h"
-Menuwindow::Menuwindow(QWidget *parent) : QWidget(parent)
+#include "Menuwindow.h"
+Menuwindow::Menuwindow(QString imagename ,MainWindow *parent) : MainWindow(imagename,parent)
 {
-    setFixedSize(1500, 750);
-    // background = QPixmap(":/images/signin.jpg");
-    // QTransform transform;
-    // transform.rotate(90); // چرخش 90 درجه ساعتگرد
-    // background = background.transformed(transform, Qt::SmoothTransformation);
 
-    // چرخش تصویر
-    background = QPixmap(":/images/sign.jpg");
-    // QTransform transform;
-    // transform.rotate(90);
-    // background = background.transformed(transform, Qt::SmoothTransformation);
+    setObjects();
 
-    // کاهش شفافیت
-    // QPixmap semiTransparentBg(background.size());
-    // semiTransparentBg.fill(Qt::transparent);
-    // QPainter p(&semiTransparentBg);
-    // p.setOpacity(0.85); // 85% مات
-    // p.drawPixmap(0, 0, background);
-    // p.end();
-    // background = semiTransparentBg;
-    //نام بازی
-    QLabel *gamenameL= new QLabel(this);
-    QPixmap  gamenameP(":/images/gamename.jpg");
-    gamenameP = gamenameP.scaledToWidth(400, Qt::SmoothTransformation);
-    gamenameL->setGeometry(550, 100, gamenameP.width(), gamenameP.height());
-    gamenameL->setPixmap(gamenameP);
-    //جدول
-    QLabel *tableL = new QLabel(this);
-    QPixmap tableP(":/images/table.png");
-    tableP = tableP.scaledToWidth(400, Qt::SmoothTransformation);
-    tableL->setGeometry(550, 180, 400, 450);
-    tableL->setPixmap(tableP);
+}
+Menuwindow::~Menuwindow()
+{}
 
-    // تنظیم شفافیت 40% (60% opacity)
-    QGraphicsOpacityEffect *opacityEffect = new QGraphicsOpacityEffect;
-    opacityEffect->setOpacity(0.4); // مقدار بین 0 (کاملاً شفاف) تا 1 (کاملاً مات)
-    tableL->setGraphicsEffect(opacityEffect);
-
-    // برای پس‌زمینه شفاف
-    tableL->setAttribute(Qt::WA_TranslucentBackground);
-    tableL->setStyleSheet("background: transparent;");
+void Menuwindow::setObjects()
+{
+    QTransform transform;
+    transform.rotate(90);
+    background = background.transformed(transform, Qt::SmoothTransformation);
 
     Lpagename = new QLabel("menu", this);
     pbnstartgame = new QPushButton("start game" ,this);
@@ -64,15 +35,43 @@ Menuwindow::Menuwindow(QWidget *parent) : QWidget(parent)
     pbnsignout->setStyleSheet("color: white; background: red;");
     Lerror->setStyleSheet("color: red;");
 
+    connect(pbnstartgame, &QPushButton::clicked, this, [this]() {
+        gotowindow(1);
+    });
+    connect(pbneditinformation, &QPushButton::clicked, this, [this]() {
+        gotowindow(2);
+    });
+    connect(pbnhistory, &QPushButton::clicked, this, [this]() {
+        gotowindow(3);
+    });
+    connect(pbnsignout, &QPushButton::clicked, this, [this]() {
+        gotowindow(4);
+    });
 }
-Menuwindow::~Menuwindow()
+void Menuwindow::readInfo()
 {}
-void Menuwindow:: paintEvent(QPaintEvent* event)
+
+void Menuwindow::gotowindow(int choice)
 {
-    QPainter painter(this);
-    painter.drawPixmap(0, 0, width(), height(), background);
+    switch(choice)
+    {
+    case 1:
 
-    //map.displaymap(this);
+        break;
+    case 2:
+    {
+        Editwindow *n = new Editwindow();
+        n->show();
+        this->close();
+    }
+        break;
+    case 3:
+        break;
+    case 4:
+        Beginwindow *n=new Beginwindow();
+        n->show();
+        this->close();
+        break;
+    }
 
-    QWidget::paintEvent(event);
 }

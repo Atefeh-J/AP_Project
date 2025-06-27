@@ -1,6 +1,5 @@
 #ifndef FORGOTPSWWINDOW_H
 #define FORGOTPSWWINDOW_H
-
 #include <QWidget>
 #include <QLabel>
 #include <QKeyEvent>
@@ -13,24 +12,27 @@
 #include <QTextEdit>
 #include <QPushButton>
 #include <QVBoxLayout>
-class Forgotpswwindow : public QWidget
+#include "SigninWindow.h"
+#include "forgotpswwindow.h"
+#include"menuwindow.h"
+#include"signupwindow.h"
+#include"editwindow.h"
+#include"mainwindow.h"
+class Forgotpswwindow : public MainWindow
 {
-    //QLabel* playerp;
-    //Player player;
-    QPixmap background;
-    //QMovie* playerGif;
+    Q_OBJECT
+
     QLabel *Lpagename;
     QLabel *Lphone;
     QTextEdit *txtphone;
     QPushButton *pbnsign;
     QLabel *Lerror;
-    //QVBoxLayout *mainLayout;
-
 public:
-    Forgotpswwindow(QWidget *parent = nullptr);
+    Forgotpswwindow(QString imagename=":/images/sign.jpg" ,MainWindow *parent = nullptr);
     ~Forgotpswwindow();
-
-protected:
-    void paintEvent(QPaintEvent* event) override;
+    void setObjects()override;
+public slots:
+    void readInfo() override;
+    void gotowindow(int choice) override;
 };
 #endif // FORGOTPSWWINDOW_H

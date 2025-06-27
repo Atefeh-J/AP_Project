@@ -1,3 +1,4 @@
+///
 #include "forgotpswwindow.h"
 Forgotpswwindow::Forgotpswwindow(QString imagename ,MainWindow *parent) : MainWindow(imagename,parent)
 {

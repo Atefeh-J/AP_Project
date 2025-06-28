@@ -39,7 +39,3 @@ void CardItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
     emit clicked();
     QGraphicsPixmapItem::mousePressEvent(event); // فراخوانی نسخه‌ی پایه
 }
-
-
-
-

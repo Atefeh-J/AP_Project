@@ -105,4 +105,3 @@ void MainWindow::setupCardScene(CardScene* sceneObject)
     view->raise();
     connect(sceneObject, &CardScene::goToMainWindow, this, &MainWindow::showMainContent);
 }
-

@@ -1,6 +1,7 @@
 #ifndef BEGINWINDOW_H
 #define BEGINWINDOW_H
 
+
 #include <QMainWindow>
 #include <QWidget>
 #include <QLabel>

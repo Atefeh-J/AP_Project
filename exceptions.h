@@ -1,41 +1,45 @@
-// #ifndef EXCEPTIONS_H
-// #define EXCEPTIONS_H
+#ifndef EXCEPTIONS_H
+#define EXCEPTIONS_H
 
-// #include <stdexcept>
-// #include <QString>
+#include <stdexcept>
+#include <QString>
 
-// class MyExeption : public std::runtime_error
-// {
-//     QString Expmessage;
-// public:
-//     MyExeption(const QString& message);
-//         QString message() const;
+class MyException : public std::runtime_error {
+private:
+    QString Expmessage;
 
-// };
+public:
+    explicit MyException(const QString& message);
+    QString getMessage() const;
+};
 
-// class PhoneException : public MyExeption
-// {
-// public:
-//     PhoneException();
-// };
+class PhoneException : public MyException
+{
+public:
+    PhoneException();
+};
 
-// class EmailException : public MyExeption
-// {
-// public:
-//     EmailException();
-// };
+class EmailException : public MyException
+{
+public:
+    EmailException();
+};
 
-// // خطای کاراکترهای نامعتبر
-// class CharactersException : public MyExeption
-// {
-// public:
-//     CharactersException();
-// };
+class CharactersException : public MyException
+{
+public:
+    CharactersException();
+};
 
-// class UsernameException : public MyExeption
-// {
-// public:
-//     UsernameException(const QString& username);
-// };
+class UsernameException : public MyException
+{
+public:
+    explicit UsernameException(const QString& username);
+};
+class EmptyFieldException : public MyException
+{
+public:
+    explicit EmptyFieldException();
+};
 
-// #endif // EXCEPTIONS_H
+#endif // EXCEPTIONS_H

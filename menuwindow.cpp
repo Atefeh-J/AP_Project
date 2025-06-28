@@ -19,21 +19,19 @@ void Menuwindow::setObjects()
     pbneditinformation = new QPushButton("edit information" ,this);
     pbnhistory = new QPushButton("history" ,this);
     pbnsignout = new QPushButton("signout" ,this);
-    Lerror = new QLabel("h",this);
+
     // تنظیم موقعیت و اندازه مناسب
     int y=200;
-    Lpagename->setGeometry(730, y, 200, 25);y=y+30+20;  // عرض بیشتر برای متن
+    Lpagename->setGeometry(730, y, 200, 25);y=y+30+20;
     pbnstartgame->setGeometry(650, y, 200, 25);y=y+30+20;
     pbneditinformation->setGeometry(650, y, 200, 25);y=y+30+20;
     pbnhistory->setGeometry(650, y, 200, 25);y=y+30+20;
     pbnsignout->setGeometry(650, y, 200, 25);y=y+30+20;
-    Lerror->setGeometry(650, y, 300, 25);
-
+    
     pbnstartgame->setStyleSheet("color: white; background: red;");
     pbneditinformation->setStyleSheet("color: white; background: red;");
     pbnhistory->setStyleSheet("color: white; background: red;");
     pbnsignout->setStyleSheet("color: white; background: red;");
-    Lerror->setStyleSheet("color: red;");
 
     connect(pbnstartgame, &QPushButton::clicked, this, [this]() {
         gotowindow(1);

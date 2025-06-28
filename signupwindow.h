@@ -15,6 +15,7 @@
 #include <QPushButton>
 #include <QVBoxLayout>
 
+#include "exceptions.h"
 #include "signinwindow.h"
 #include "forgotpswwindow.h"
 #include"menuwindow.h"
@@ -41,12 +42,14 @@ class Signupwindow : public MainWindow
     QTextEdit *txtpassword;
 
     QPushButton *pbnsignup;
-    QLabel *Lerror;
+
 
 public:
     Signupwindow(QString imagename=":/images/sign.jpg" ,MainWindow *parent = nullptr);
     ~Signupwindow();
     virtual void setObjects()override;
+    // bool ContainInvalidCh(QString str);
+    // bool isEmptytxt(QString str);
 public slots:
     virtual void readInfo()override;
     virtual void gotowindow(int choice) override;

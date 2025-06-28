@@ -12,6 +12,8 @@
 #include <QTextEdit>
 #include <QPushButton>
 #include <QVBoxLayout>
+
+#include "exceptions.h"
 #include "SigninWindow.h"
 #include "forgotpswwindow.h"
 #include"menuwindow.h"
@@ -26,11 +28,14 @@ class Forgotpswwindow : public MainWindow
     QLabel *Lphone;
     QTextEdit *txtphone;
     QPushButton *pbnsign;
-    QLabel *Lerror;
+    //QLabel *Lerror;
 public:
     Forgotpswwindow(QString imagename=":/images/sign.jpg" ,MainWindow *parent = nullptr);
     ~Forgotpswwindow();
     void setObjects()override;
+    // bool ContainInvalidCh(QString str);
+    // bool isEmptytxt(QString str);
+
 public slots:
     void readInfo() override;
     void gotowindow(int choice) override;

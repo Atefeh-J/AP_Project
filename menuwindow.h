@@ -31,7 +31,7 @@ class Menuwindow : public MainWindow
     QPushButton *pbneditinformation;
     QPushButton *pbnhistory;
     QPushButton *pbnsignout;
-    QLabel *Lerror;
+    //QLabel *Lerror;
 
 public:
     Menuwindow(QString imagename=":/images/menu.jpg" ,MainWindow *parent = nullptr);

@@ -6,7 +6,9 @@ Signupwindow::Signupwindow(QString imagename ,MainWindow *parent) : MainWindow(i
 
 }
 Signupwindow::~Signupwindow()
-{}
+{
+
+}
 
 void Signupwindow::setObjects()
 {
@@ -26,10 +28,10 @@ void Signupwindow::setObjects()
     txtphone = new QTextEdit(this);
 
     pbnsignup = new QPushButton("signin", this);
-    Lerror = new QLabel("h",this);
+
     // تنظیم موقعیت و اندازه مناسب
     int y=200;
-    Lpagename->setGeometry(730, y, 200, 25);y=y+25+10;  // عرض بیشتر برای متن
+    Lpagename->setGeometry(730, y, 200, 25);y=y+25+10;
     Lname->setGeometry(600, y, 130, 25);y=y+25+5;
     txtname->setGeometry(600, y, 120, 40);y=y+40+10;
     Llastname->setGeometry(600, y, 130, 25);y=y+25+5;
@@ -45,15 +47,12 @@ void Signupwindow::setObjects()
     txtpassword->setGeometry(785, y, 120, 40);y=y+40+30;
 
     pbnsignup->setGeometry(670, y, 150, 30);y=y+30+20;
-    Lerror->setGeometry(600, y, 300, 25);
+
     pbnsignup->setStyleSheet("color: white; background: red;");
-    Lerror->setStyleSheet("color: red;");
 
     connect(pbnsignup, &QPushButton::clicked, this, [this]() {
         gotowindow(1);
     });
-    //connect(pbnsignup,SIGNAL(clicked()),this,SLOT(readInfo()));
-
 
 }
 void Signupwindow::readInfo()
@@ -63,7 +62,31 @@ void Signupwindow::readInfo()
     QString name= txtname->toPlainText();
     QString lastname= txtlastname->toPlainText();
     QString email= txtemail->toPlainText();
-    QString phone= txtpassword->toPlainText();
+    QString phone= txtphone->toPlainText();
+
+    if (isEmptytxt(username)||isEmptytxt(name)||isEmptytxt(lastname)||isEmptytxt(password)||isEmptytxt(email)||isEmptytxt(phone))
+    {
+        throw EmptyFieldException();
+    }
+    if (ContainInvalidCh(username)||ContainInvalidCh(name)||ContainInvalidCh(lastname)||ContainInvalidCh(password)||ContainInvalidCh(email)||ContainInvalidCh(phone))
+    {
+        throw CharactersException();
+    }
+    if (username.contains(" ")||password.contains(" ")||email.contains(" ")||phone.contains(" "))
+    {
+        throw CharactersException();
+    }
+    if (!email.contains("@") || !email.contains("."))
+    {
+        throw EmailException();
+    }
+    if (phone.size() != 11||  !phone.startsWith("09"))
+    {
+        throw PhoneException();
+    }
+    // if (database->usernameExists(username)) {
+    //     throw DuplicateUsernameException(username);
+    // }
 }
 
 void Signupwindow::gotowindow(int choice)
@@ -72,9 +95,18 @@ void Signupwindow::gotowindow(int choice)
     {
     case 1:
     {
-        SigninWindow *n = new SigninWindow();
-        n->show();
-        this->close();
+        try{
+            readInfo();
+            SigninWindow *n = new SigninWindow();
+            n->show();
+            this->close();
+        }
+        catch (const MyException& e)
+        {
+            Lerror->setText(e.getMessage()); // بدون کوتیشن
+            Lerror->show();
+
+        }
         break;
     }
     case 2:
@@ -87,3 +119,5 @@ void Signupwindow::gotowindow(int choice)
     }
 
 }
+
+

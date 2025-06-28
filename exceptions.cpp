@@ -1,22 +1,35 @@
-// #include "exceptions.h"
+#include "exceptions.h"
 
-// MyExeption(const QString& message): std::runtime_error(message.toStdString()), Expmessage(message)
-// {}
+MyException::MyException(const QString& message)
+    : std::runtime_error(message.toStdString()),
+    Expmessage(message)
+{
+}
 
-// QString message() const
-// {
-//     return Expmessage;
-// }
+QString MyException::getMessage() const {
+    return Expmessage;
+}
 
-// PhoneException(): MyExeption(QString("invalid phone"))
-// {}
+PhoneException::PhoneException()
+    : MyException("Invalid phone number")
+{
+}
 
-// EmailException(): MyExeption(QString("invalid email"))
-// {}
+EmailException::EmailException()
+    : MyException("Invalid email address")
+{
+}
 
-// CharactersException(): MyExeption(QString("invalid character"))
-// {}
+CharactersException::CharactersException()
+    : MyException("Invalid characters detected. donnot use !#^*& and enter. \n donnot use space in email,phone,oassword,username.")
+{
+}
 
-// UsernameException(): MyExeption(QString("This username already exists.")
-// {}
-
+UsernameException::UsernameException(const QString& username)
+    : MyException("Username '" + username + "' already exists")
+{
+}
+EmptyFieldException::EmptyFieldException()
+    : MyException("field cannot be empty")
+{
+}

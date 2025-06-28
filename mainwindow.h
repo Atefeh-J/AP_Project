@@ -27,12 +27,16 @@ public:
     ~MainWindow();
     void setBackground(QString imagename);
     virtual void setObjects();
+    bool ContainInvalidCh(QString str);
+    bool isEmptytxt(QString str);
+
 public slots:
     virtual void readInfo();
     virtual void gotowindow(int choice);
 
 protected:
     QPixmap background;
+        QLabel *Lerror;
     void paintEvent(QPaintEvent* event) override;
 };
 #endif // MAINWINDOW_H

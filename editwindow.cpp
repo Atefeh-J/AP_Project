@@ -31,7 +31,7 @@ void Editwindow::setObjects()
     txtphone = new QTextEdit(this);
 
     pbnsignup = new QPushButton("edit", this);
-    Lerror = new QLabel("h",this);
+
     // تنظیم موقعیت و اندازه مناسب
     int y=200;
     Lpagename->setGeometry(730, y, 200, 25);y=y+25+10;  // عرض بیشتر برای متن
@@ -50,9 +50,9 @@ void Editwindow::setObjects()
     txtpassword->setGeometry(785, y, 120, 40);y=y+40+30;
 
     pbnsignup->setGeometry(670, y, 150, 30);y=y+30+20;
-    Lerror->setGeometry(600, y, 300, 25);
+
     pbnsignup->setStyleSheet("color: white; background: red;");
-    Lerror->setStyleSheet("color: red;");
+
 
     //     connect(pbnsignup,SIGNAL(clicked()),this,SLOT(readInfo()));
     connect(pbnsignup, &QPushButton::clicked, this, [this]() {
@@ -66,7 +66,26 @@ void Editwindow::readInfo()
     QString name= txtname->toPlainText();
     QString lastname= txtlastname->toPlainText();
     QString email= txtemail->toPlainText();
-    QString phone= txtpassword->toPlainText();
+    QString phone= txtphone->toPlainText();
+    if (ContainInvalidCh(username)||ContainInvalidCh(name)||ContainInvalidCh(lastname)||ContainInvalidCh(password)||ContainInvalidCh(email)||ContainInvalidCh(phone))
+    {
+        throw CharactersException();
+    }
+    if (username.contains(" ")||password.contains(" ")||email.contains(" ")||phone.contains(" "))
+    {
+        throw CharactersException();
+    }
+    if ((!email.contains("@") || !email.contains("."))&& !email.isEmpty())
+    {
+        throw EmailException();
+    }
+    if ((phone.size() != 11||  !phone.startsWith("09"))&& !phone.isEmpty())
+    {
+        throw PhoneException();
+    }
+    // if (database->usernameExists(username)) {
+    //     throw DuplicateUsernameException(username);
+    // }
 }
 
 void Editwindow::gotowindow(int choice)
@@ -75,12 +94,26 @@ void Editwindow::gotowindow(int choice)
     {
     case 1:
     {
-        {
+        try{
+            readInfo();
             Menuwindow *n = new Menuwindow();
             n->show();
             this->close();
         }
+        catch (const MyException& e)
+        {
+            Lerror->setText(e.getMessage()); // بدون کوتیشن
+            Lerror->show();
+
+        }
+        break;
     }
     }
 
 }
+// bool Editwindow::ContainInvalidCh(QString str)
+// {
+//     if (str.contains("#")||str.contains("!")||str.contains("@")||str.contains("^")||str.contains("&")||str.contains("*")||str.contains("#"))
+//         return true;
+//     return false;
+// }

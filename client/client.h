@@ -4,6 +4,7 @@
 // #include <QObject>
 // #include <QTcpSocket>
 // #include <QDebug>
+// #include <QCryptographicHash>
 
 // class client : public QObject
 // {
@@ -16,6 +17,7 @@
 //     void startConnection(const QString &host, quint16 port);
 //     void sendMessage(const QString &message);
 
+// QString hashPassword(const QString &password)ک
 // signals:  // بخش signals را اضافه کنید
 //     void connected();
 //     void messageReceived(const QByteArray &data);

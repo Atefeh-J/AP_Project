@@ -45,3 +45,14 @@
 //     qDebug() << "Disconnected";
 //     emit disconnected();
 // }
+
+// QString client::hashPassword(const QString &password) {
+//     // تبدیل پسورد به بایت‌آرایه و ایجاد هش
+//     QByteArray hash = QCryptographicHash::hash(
+//         password.toUtf8(),
+//         QCryptographicHash::Sha256
+//         );
+
+//     // تبدیل هش به فرمت hexadecimal
+//     return hash.toHex();
+// }

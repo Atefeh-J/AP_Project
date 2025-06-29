@@ -23,7 +23,7 @@ MainWindow::MainWindow(QWidget *parent)
         qDebug() << "User Ali not found!";
     }
     qDebug()<<"hi";
-    d.saveUserData();
+    //d.saveUserData();
 }
 
 MainWindow::~MainWindow()

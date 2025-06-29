@@ -10,6 +10,7 @@
 #include <QMap>
 
 #include "user.h"
+#include "exceptions.h"
 
 class Databasemanage
 {

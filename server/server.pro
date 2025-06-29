@@ -10,14 +10,20 @@ CONFIG += c++17
 
 SOURCES += \
     authserver.cpp \
+    card.cpp \
     databasemanage.cpp \
+    exceptions.cpp \
+    gamelogic.cpp \
     main.cpp \
     mainwindow.cpp \
     user.cpp
 
 HEADERS += \
     authserver.h \
+    card.h \
     databasemanage.h \
+    exceptions.h \
+    gamelogic.h \
     mainwindow.h \
     user.h
 

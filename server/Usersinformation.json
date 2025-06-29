@@ -1,0 +1,48 @@
+{
+    "Users": [
+        {
+            "Email": "sdd",
+            "History": [
+                {
+                    "Date": "hlk",
+                    "Level1": "win",
+                    "Level2": "win",
+                    "Level3": "win",
+                    "Opponent": "gdyuy",
+                    "Result": "ghf"
+                }
+            ],
+            "Lastname": "k",
+            "Name": "Ali",
+            "Password": "gfg",
+            "Phone": "kgda",
+            "Username": "Ali"
+        },
+        {
+            "Email": "h",
+            "History": [
+                {
+                    "Date": "l",
+                    "Level1": "l",
+                    "Level2": "l",
+                    "Level3": "l",
+                    "Opponent": "l",
+                    "Result": "l"
+                },
+                {
+                    "Date": "hlk",
+                    "Level1": "win",
+                    "Level2": "win",
+                    "Level3": "win",
+                    "Opponent": "gdyuy",
+                    "Result": "ghf"
+                }
+            ],
+            "Lastname": "l",
+            "Name": "l",
+            "Password": "l",
+            "Phone": "l",
+            "Username": "rri"
+        }
+    ]
+}

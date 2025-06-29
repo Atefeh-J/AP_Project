@@ -20,7 +20,7 @@ bool Authserver::registerUser(QString username, QString hashedPassword, QString 
 
 bool Authserver::authenticate(QString username, QString hashpassword)
 {
-    for(auto x:Users)
+    for(const auto &x:Users)
     {
         if(x->getUsername()==username && x->getHashpasword()==hashpassword)
             return 1;
@@ -30,7 +30,7 @@ bool Authserver::authenticate(QString username, QString hashpassword)
 
 bool Authserver::resetPassword(QString phone)
 {
-    for(auto x:Users)
+    for(const auto &x:Users)
     {
         if(x->getPhone()==phone)
             return 1;

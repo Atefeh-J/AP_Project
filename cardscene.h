@@ -44,11 +44,9 @@ signals:
 private slots:
     void onShuffleAnimationFinished();
 
-
 private:
     QList<CardItem*> cards;
     CardItem* selectedCard = nullptr;
-<<<<<<< HEAD
     QParallelAnimationGroup *shuffleAnimationGroup;
 
     void setupDiamondCards();

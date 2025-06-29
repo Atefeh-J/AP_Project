@@ -32,8 +32,15 @@ MainWindow::MainWindow(QWidget *parent)
     connect(scene, &CardScene::firstPhaseFinished, this, [this]() {
     });
 
+    // connect(scene, &CardScene::allPhasesFinished, this, [this]() {
+    //     QTimer::singleShot(3000, this, &MainWindow::showMainContent);
+    // });
+
+    // setupCardGameScene();
     connect(scene, &CardScene::allPhasesFinished, this, [this]() {
-        QTimer::singleShot(3000, this, &MainWindow::showMainContent);
+        QTimer::singleShot(3000, this, [this]() {
+            setupCardGameScene(); // شروع CardGameScene پس از تاخیر
+        });
     });
 
 }
@@ -60,32 +67,10 @@ void MainWindow::updateBackground()
 
 void MainWindow::showMainContent() {
     view->hide();
-
-
-    // QLabel* label = new QLabel("🎉 کارت انتخاب شد!", this);
-    // label->setAlignment(Qt::AlignCenter);
-    // label->setStyleSheet("font-size: 24px; color: white;");
-    // label->setGeometry(this->rect());
-    // label->raise();
 }
 
 void MainWindow::setupCardScene(CardScene* sceneObject)
 {
-    // if (view)
-    //     view->deleteLater();
-    // view = new QGraphicsView(this);
-    // view->setGeometry(this->rect());
-    // scene1 = sceneObject;
-    // view->setScene(scene1);
-    // view->setSceneRect(0, 0, width(), height());
-    // view->setRenderHint(QPainter::Antialiasing);
-    // view->setStyleSheet("background: transparent;");
-    // view->setFrameStyle(QFrame::NoFrame);
-    // view->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    // view->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    // view->raise();
-    // connect(scene1, &CardScene::goToMainWindow, this, &MainWindow::showMainContent);
-
     if (view) {
         view->deleteLater();
         view = nullptr;
@@ -105,3 +90,48 @@ void MainWindow::setupCardScene(CardScene* sceneObject)
     view->raise();
     connect(sceneObject, &CardScene::goToMainWindow, this, &MainWindow::showMainContent);
 }
+
+void MainWindow::setupCardGameScene()
+{
+
+    // if (scene1) {
+    //     scene1->deleteLater();
+    //     scene1 = nullptr;
+    // }
+
+    // scene1 = new CardScene(this);
+    // view->setScene(scene1);
+    // view->setSceneRect(0, 0, width(), height());
+
+    // // اتصال به سیگنال اتمام فاز اول (اختیاری)
+    // connect(scene1, &CardScene::firstPhaseFinished, this, []() {
+    //     qDebug() << "✅ فاز اول CardScene تمام شد.";
+    // });
+
+    // // اتصال به پایان کامل CardScene و رفتن به CardGameScene
+    // connect(scene1, &CardScene::allPhasesFinished, this, [=]() {
+    //     qDebug() << "🎯 CardScene تمام شد، حالا CardGameScene را آغاز می‌کنیم...";
+    //     QTimer::singleShot(1000, this, &MainWindow::setupCardGameScene);
+    // });
+    if (view) {
+        view->hide();
+        view->deleteLater();
+        view = nullptr;
+    }
+
+    view = new QGraphicsView(this);
+    view->setGeometry(rect());
+    view->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    view->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    view->setStyleSheet("background: transparent;");
+
+    cardGameScene = new CardGameScene(this);
+    view->setScene(cardGameScene);
+    view->setSceneRect(0, 0, width(), height());
+    view->show();
+
+    cardGameScene->startGame();
+
+    qDebug() << "CardGameScene initialized!";
+}
+

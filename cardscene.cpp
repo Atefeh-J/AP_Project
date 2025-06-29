@@ -184,3 +184,5 @@ void CardScene::onShuffleAnimationFinished()
     qDebug() << "انیمیشن شافل کامل شد!";
     emit allPhasesFinished();
 }
+
+

@@ -2,6 +2,6 @@
     <qresource prefix="/images">
         <file>background.jpeg</file>
         <file>background2.jpg</file>
-        <file>welcome_text.jpg</file>
+        <file>back.jpg</file>
     </qresource>
 </RCC>

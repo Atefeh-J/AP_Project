@@ -11,6 +11,7 @@
 #include <QTcpSocket>
 #include <QGraphicsView>
 #include <cardscene.h>
+#include <cardgamescene.h>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -25,7 +26,6 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
-    void setupCardScene(CardScene* sceneObject);
     void startMainGame();
 
 protected:
@@ -37,8 +37,11 @@ private:
     Ui::MainWindow *ui;
     // QTcpSocket* client_socket;
     void updateBackground();
+    void setupCardGameScene();
+    void setupCardScene(CardScene* sceneObject);
     QGraphicsView* view=nullptr;
     CardScene* scene1=nullptr;
+    CardGameScene* cardGameScene = nullptr;
     std::vector<CardItem*>selectedCards;
 };
 #endif // MAINWINDOW_H

@@ -1,18 +1,18 @@
-#include "mainwindow.h"
+// #include "mainwindow.h"
 
-#include <QApplication>
+// #include <QApplication>
 
-int main(int argc, char *argv[])
-{
-    QApplication a(argc, argv);
-    MainWindow w;
-    w.show();
-    return a.exec();
-}
+// int main(int argc, char *argv[])
+// {
+//     QApplication a(argc, argv);
+//     MainWindow w;
+//     w.show();
+//     return a.exec();
+// }
 
 // #include <QCoreApplication>
 // #include <QDebug>
-// #include "gamelogic.h"
+// #include "detectwinner.h"
 // #include "card.h"
 
 // void printCards(const QVector<Card>& cards, const QString& playerName) {
@@ -33,11 +33,11 @@ int main(int argc, char *argv[])
 //         Card(Card::Gold, Card::Seven),
 //         Card(Card::Coin, Card::Nine),
 //         Card(Card::Dollar, Card::Nine),
-//         Card(Card::Diamond, Card::Ten)
+//         Card(Card::Diamond, Card::Four)
 //     };
 
 //     QVector<Card> player2 = {
-//         Card(Card::Gold, Card::Nine),
+//         Card(Card::Coin, Card::Nine),
 //         Card(Card::Gold, Card::Nine),
 //         Card(Card::Coin, Card::Seven),
 //         Card(Card::Gold, Card::Seven),
@@ -76,3 +76,49 @@ int main(int argc, char *argv[])
 
 //     return a.exec();
 // }
+#include <QCoreApplication>
+#include <QDebug>
+#include "detectwinner.h"
+#include "card.h"
+
+int main(int argc, char *argv[]) {
+    QCoreApplication a(argc, argv);
+
+ //   مثال 1: Golden Hand vs Order Hand
+    // QVector<Card> player1 = {
+    //     Card(7,4),
+    //     Card(7,3),
+    //     Card(3,1),
+    //     Card(1,2),
+    //     Card(4,4)
+    // };
+    QVector<Card> player1 = {
+        Card(2,3),
+        Card(1,2),
+        Card(13,4),
+        Card(11,2),
+        Card(10,4)
+    };
+
+    // QVector<Card> player2 = {
+    //     Card(7,1),
+    //     Card(7,2),
+    //     Card(1,1),
+    //     Card(3,3),
+    //     Card(5,1)
+    // };
+    QVector<Card> player2 = {
+         Card(2,1),
+         Card(1,3),
+         Card(13,3),
+         Card(11,1),
+         Card(10,2)
+    };
+
+    DetectWinner d(player1, player2) ;
+    int winner = d.whoIsWinner();
+    qDebug() << "Winner is:" << (winner == 1 ? "Player 1" : "Player 2");
+
+
+    return a.exec();
+}

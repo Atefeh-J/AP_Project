@@ -12,8 +12,8 @@ SOURCES += \
     authserver.cpp \
     card.cpp \
     databasemanage.cpp \
+    detectwinner.cpp \
     exceptions.cpp \
-    gamelogic.cpp \
     main.cpp \
     mainwindow.cpp \
     user.cpp
@@ -22,8 +22,8 @@ HEADERS += \
     authserver.h \
     card.h \
     databasemanage.h \
+    detectwinner.h \
     exceptions.h \
-    gamelogic.h \
     mainwindow.h \
     user.h
 

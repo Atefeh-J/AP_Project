@@ -8,6 +8,8 @@
 #include <QIODevice>  // اصلاح شده از QJsonDevice به QIODevice
 #include <QDebug>
 #include <QMap>
+#include <QVector>
+#include <QDebug>  // اضافه کردن این خط
 
 #include "user.h"
 #include "exceptions.h"

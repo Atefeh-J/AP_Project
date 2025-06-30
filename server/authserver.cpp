@@ -1,49 +1,77 @@
 #include "authserver.h"
+#include "mythread.h"
 
-
-Authserver::Authserver()
+AuthServer::AuthServer(QObject *parent) : QTcpServer(parent)//, dbManager(&users)
 {
+
+    loadUserHistory(); // بارگذاری داده‌های کاربران از فایل
 
 }
 
-bool Authserver::registerUser(QString username, QString hashedPassword, QString name, QString lastname, QString phone, QString email)
+bool AuthServer::registerUser(const QString &username, const QString &hashedPassword,
+                              const QString &name, const QString &lastname,
+                              const QString &phone, const QString &email)
 {
-    // بررسی وجود کاربر
-    if (Users.contains(username)) {
+    if (users.contains(username)) {
         return false; // کاربر از قبل وجود دارد
     }
 
-    User *u = new User(username, hashedPassword, name, lastname, phone, email);
-    Users.insert(username, u);
+    User *newUser = new User(username, hashedPassword, name, lastname, phone, email);
+    users.insert(username, newUser);
+    saveUserHistory(); // ذخیره تغییرات در فایل
     return true;
 }
 
-bool Authserver::authenticate(QString username, QString hashpassword)
+bool AuthServer::authenticate(const QString &username, const QString &hashedPassword)
 {
-    for(const auto &x:Users)
-    {
-        if(x->getUsername()==username && x->getHashpasword()==hashpassword)
-            return 1;
+
+    if (!users.contains(username)) {
+        qDebug()<<"myt2"<<username;
+        return false;
     }
-    return 0;
+
+    return users[username]->getHashPassword() == hashedPassword;
 }
 
-bool Authserver::resetPassword(QString phone)
+bool AuthServer::resetPassword(const QString &phone, const QString &newPassword)
 {
-    for(const auto &x:Users)
-    {
-        if(x->getPhone()==phone)
-            return 1;
+    for (User *user : users) {
+        if (user->getPhone() == phone) {
+            //user->setPassword(newPassword);
+            //saveUserHistory();
+            return true;
+        }
     }
-    return 0;
+    return false;
 }
 
-void Authserver::saveUserHistory()
+void AuthServer::saveUserHistory()
 {
+    dbManager.saveUserData(users);
+}
+
+void AuthServer::loadUserHistory()
+{
+    dbManager.loadUserData(users);
 
 }
 
-void Authserver::loadUserHistory()
+void AuthServer::startServer()
 {
+    if (!listen(QHostAddress::Any, 1029)) {
+        qDebug() << "Server could not start!";
+    } else {
+        qDebug() << "Server started on port 1029";
+        qDebug() <<"hi";
 
+    }
+}
+
+void AuthServer::incomingConnection(qintptr socketDescriptor)
+{
+    qDebug() << "New connection received:" << socketDescriptor;
+    qDebug() <<"hiincom\n";
+    MyThread *thread = new MyThread(socketDescriptor, this);
+    connect(thread, &MyThread::finished, thread, &MyThread::deleteLater);
+    thread->start();
 }

@@ -1,20 +1,33 @@
-#ifndef Authserver_H
-#define Authserver_H
+#ifndef AUTHSERVER_H
+#define AUTHSERVER_H
 
-#include "User.h"
+#include <QTcpServer>
 #include <QMap>
+#include "user.h"
+#include "databasemanage.h"
 
-class Authserver
+class MyThread;
+
+class AuthServer : public QTcpServer
 {
-    QMap<QString, User*> Users;
+    Q_OBJECT
 
 public:
-    Authserver();
-    bool registerUser(QString username, QString hashedPassword, QString name, QString lastname, QString phone, QString email);
-    bool authenticate(QString username, QString hashpassword);
-    bool resetPassword(QString phone);
+    AuthServer(QObject *parent = nullptr);
+    bool registerUser(const QString &username, const QString &hashedPassword,
+                      const QString &name, const QString &lastname,
+                      const QString &phone, const QString &email);
+    bool authenticate(const QString &username, const QString &hashedPassword);
+    bool resetPassword(const QString &phone, const QString &newPassword);
     void saveUserHistory();
     void loadUserHistory();
+
+    void startServer();
+protected:
+    void incomingConnection(qintptr socketDescriptor) override;
+private:
+    QMap<QString, User*> users;
+    Databasemanage dbManager;
 };
 
-#endif // Authserver_H
+#endif // AUTHSERVER_H

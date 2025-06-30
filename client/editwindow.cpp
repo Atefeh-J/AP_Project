@@ -113,6 +113,43 @@ void Editwindow::gotowindow(int choice)
     }
 
 }
+// bool Signupwindow::onSignupButtonClicked() {
+//     Client *client = new Client(this);
+//     bool loginSuccess = false; // حالت اولیه
+
+//     // اتصال سیگنال قبل از ارسال درخواست
+//     connect(client, &Client::responseReceived,
+//             [this, &loginSuccess, client](const QJsonObject &response) {
+//                 if (response["status"] == "success") {
+//                     loginSuccess = true;
+//                     SigninWindow *n = new SigninWindow();
+//                     n->show();
+//                     this->close();
+//                 } else {
+//                     Lerror->setText("Login failed");
+//                     Lerror->show();
+//                 }
+//                 client->deleteLater(); // آزاد کردن حافظه
+//             });
+
+//     client->connectToServer("127.0.0.1", 1029);
+
+//     QJsonObject loginRequest;
+//     loginRequest["action"] = "register";
+//     loginRequest["username"] = txtusername->text();
+//     loginRequest["password"] = client->hashPassword(txtpassword->text());
+//     loginRequest["name"] = txtname->text();
+//     loginRequest["lastname"] = txtlastname->text();
+//     loginRequest["phone"] = txtphone->text();
+//     loginRequest["email"] = txtemail->text();
+
+//     client->sendRequest(loginRequest);
+
+//     // در اینجا نمی‌توانیم مقدار را برگردانیم چون پاسخ هنوز دریافت نشده
+//     // باید منتظر بمانیم تا سیگنال responseReceived فراخوانی شود
+//     return false; // مقدار موقت
+// }
+
 // bool Editwindow::ContainInvalidCh(QString str)
 // {
 //     if (str.contains("#")||str.contains("!")||str.contains("@")||str.contains("^")||str.contains("&")||str.contains("*")||str.contains("#"))

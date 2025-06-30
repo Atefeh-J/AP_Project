@@ -1,36 +1,35 @@
-// #ifndef CLIENT_H
-// #define CLIENT_H
 
-// #include <QObject>
-// #include <QTcpSocket>
-// #include <QDebug>
-// #include <QCryptographicHash>
+#ifndef CLIENT_H
+#define CLIENT_H
 
-// class client : public QObject
-// {
-//     Q_OBJECT
+#include <QObject>
+#include <QTcpSocket>
+#include <QDebug>
+#include <QCryptographicHash>
+#include<QJsonDocument>
+#include <QJsonObject>
 
-// public:
-//     explicit client(QObject *parent = nullptr);
-//     ~client();  // destructor را اضافه کنید
+class Client : public QObject
+{
+    Q_OBJECT
 
-//     void startConnection(const QString &host, quint16 port);
-//     void sendMessage(const QString &message);
+public:
+    explicit Client(QObject *parent = nullptr);
+    void connectToServer(const QString &host, quint16 port);
+    void sendRequest(const QJsonObject &request);
+    QString hashPassword(const QString &password);
 
-// QString hashPassword(const QString &password)ک
-// signals:  // بخش signals را اضافه کنید
-//     void connected();
-//     void messageReceived(const QByteArray &data);
-//     void disconnected();
+signals:
+    void connected();
+    void responseReceived(const QJsonObject &response);
+    void errorOccurred(const QString &error);
 
-// private slots:
-//     void onConnected();
-//     void onReadyRead();
-//     void onDisconnected();
+private slots:
+    void onReadyRead();
+    void onError(QAbstractSocket::SocketError socketError);
 
-// private:
-//     QTcpSocket *socket;
-// };
+private:
+    QTcpSocket *socket;
+};
 
-// #endif // CLIENT_H
-//////////////////////////////////////////////////
+#endif // CLIENT_H

@@ -1,7 +1,7 @@
 QT       += core gui
-
+QT += network
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
-
+QT += core network
 CONFIG += c++17
 
 # You can make your code fail to compile if it uses deprecated APIs.
@@ -16,6 +16,7 @@ SOURCES += \
     exceptions.cpp \
     main.cpp \
     mainwindow.cpp \
+    mythread.cpp \
     user.cpp
 
 HEADERS += \
@@ -25,6 +26,7 @@ HEADERS += \
     detectwinner.h \
     exceptions.h \
     mainwindow.h \
+    mythread.h \
     user.h
 
 FORMS += \

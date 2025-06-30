@@ -1,7 +1,7 @@
 #include "Databasemanage.h"
 
 
-Databasemanage::Databasemanage(QMap<QString, User*> *u) : filename(nullptr), users(u)
+Databasemanage::Databasemanage(/*QMap<QString, User*> *u*/) : filename(nullptr)/*, users(u)*/
 {
     filename = new QFile("D:\\projects\\AP\\ApProject\\server\\Usersinformation.json");
     if(!filename->open(QIODevice::ReadOnly)) {  // اصلاح به QIODevice
@@ -19,7 +19,7 @@ Databasemanage::~Databasemanage() {
     }
 }
 
-bool Databasemanage::saveUserData()
+bool Databasemanage::saveUserData(QMap<QString, User*> &users)
 {
     // filename = new QFile("D:\\projects\\AP\\ApProject\\server\\Usersinformation.json");
     // if(!filename->open(QIODevice::WriteOnly)) {  // اصلاح به QIODevice
@@ -39,10 +39,10 @@ bool Databasemanage::saveUserData()
     }
 
     QJsonArray usersArray;
-    for(auto it = users->constBegin(); it != users->constEnd(); ++it) {
+    for(auto it = users.constBegin(); it != users.constEnd(); ++it) {
         QJsonObject userObject;
         userObject["Username"] = it.key();
-        userObject["Password"] = it.value()->getHashpasword();
+        userObject["Password"] = it.value()->getHashPassword();
         userObject["Name"] = it.value()->getName();
         userObject["Lastname"] = it.value()->getLastname();
         userObject["Phone"] = it.value()->getPhone();
@@ -77,8 +77,9 @@ bool Databasemanage::saveUserData()
 
 }
 
-bool Databasemanage::loadUserData()
+bool Databasemanage::loadUserData(QMap<QString, User*> &users)
 {
+    qDebug()<<"hi2";
     // filename = new QFile("D:\\projects\\AP\\ApProject\\server\\Usersinformation.json");
     // if(!filename->open(QIODevice::ReadOnly)) {  // اصلاح به QIODevice
     //     qWarning() << "Couldn't open file for reading!";
@@ -134,14 +135,26 @@ bool Databasemanage::loadUserData()
                                    historyObj["Result"].toString());
         }
 
-        users->insert(username, user);
+        users.insert(username, user);
     }
+
+    // if(users.contains("rri")) {
+    //     qDebug() << users["rri"]->getUsername();
+    //     qDebug() << users["rri"]->getHashPassword();
+    //     qDebug() << users["rri"]->getName();
+    //     qDebug() << users["rri"]->getLastname();
+    //     qDebug() << users["rri"]->getEmail();
+    //     qDebug() << users["rri"]->getPhone();
+    //     qDebug() << users["rri"]->getGamehistory()[0].Opponent;
+    // } else {
+    //     qDebug() << "User Ali not found!";
+    // }
 
     filename->close();
     return true;
 }
 
-bool Databasemanage::updateHistory()
+bool Databasemanage::updateHistory(QMap<QString, User*> &users)
 {
     // پیاده‌سازی بر اساس نیاز شما
     return true;

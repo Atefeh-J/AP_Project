@@ -13,7 +13,9 @@
 #include <QTextEdit>
 #include <QPushButton>
 #include <QVBoxLayout>
+#include<QMessageBox>
 
+#include "client.h"
 class MainWindow : public QWidget
 {
     Q_OBJECT

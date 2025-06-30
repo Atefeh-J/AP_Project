@@ -27,7 +27,7 @@ public:
     void updateProfile(QString username, QString hashedPassword, QString name, QString lastname, QString phone, QString email);
     void addGameToHistory(QString date,QString opponent,QString level1,QString level2,QString level3, QString result);
     QString getUsername();
-    QString getHashpasword();
+    QString getHashPassword();
     QString getPhone();
     QString getName();
     QString getLastname();

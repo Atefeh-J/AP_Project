@@ -35,6 +35,8 @@ public:
     void setObjects()override;
     // bool ContainInvalidCh(QString str);
     // bool isEmptytxt(QString str);
+    bool onSigninButtonClicked();
+
 
 public slots:
     void readInfo() override;

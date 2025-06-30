@@ -12,7 +12,7 @@ Signupwindow::~Signupwindow()
 
 void Signupwindow::setObjects()
 {
-    Lpagename = new QLabel("sign in", this);
+    Lpagename = new QLabel("sign up", this);
     Lusername = new QLabel("enter your username", this);
     Lpassword = new QLabel("enter your password", this);
     Lname = new QLabel("enter your name" ,this);
@@ -27,7 +27,7 @@ void Signupwindow::setObjects()
     txtemail = new QLineEdit(this);
     txtphone = new QLineEdit(this);
 
-    pbnsignup = new QPushButton("signin", this);
+    pbnsignup = new QPushButton("signup", this);
 
     // تنظیم موقعیت و اندازه مناسب
     int y=200;
@@ -99,9 +99,12 @@ void Signupwindow::gotowindow(int choice)
     {
         try{
             readInfo();
-            SigninWindow *n = new SigninWindow();
-            n->show();
-            this->close();
+            // if(onSignupButtonClicked()){
+            //     SigninWindow *n = new SigninWindow();
+            //     n->show();
+            //     this->close();
+            // }
+            onSignupButtonClicked();
         }
         catch (const MyException& e)
         {
@@ -122,4 +125,69 @@ void Signupwindow::gotowindow(int choice)
 
 }
 
+// bool Signupwindow::onSignupButtonClicked()
+// {
+//     Client *client = new Client(this); // ✅ استفاده از اشیاء روی heap
 
+//     // connect(client, &Client::responseReceived, [this](const QJsonObject &response) {
+//     //     qDebug() << "Server response:" << response;
+//     // });
+
+//     client->connectToServer("127.0.0.1", 1029);
+
+//     QJsonObject registerRequest;
+//     registerRequest["action"] = "register";
+//     registerRequest["username"] = txtusername->text();
+//     registerRequest["password"] = client->hashPassword(txtpassword->text());
+//     registerRequest["name"] = txtname->text();
+//     registerRequest["lastname"] = txtlastname->text();
+//     registerRequest["phone"] = txtphone->text();
+//     registerRequest["email"] = txtemail->text();
+
+//     client->sendRequest(registerRequest);
+
+
+//     connect(client, &Client::responseReceived, [this](const QJsonObject &response) {
+//         if (response["status"] == "success") {
+//                 return true;
+//         } else {
+//             return false;
+//         }
+//     });
+// }
+bool Signupwindow::onSignupButtonClicked() {
+    Client *client = new Client(this);
+    bool loginSuccess = false; // حالت اولیه
+
+    // اتصال سیگنال قبل از ارسال درخواست
+    connect(client, &Client::responseReceived,
+            [this, &loginSuccess, client](const QJsonObject &response) {
+                if (response["status"] == "success") {
+                    loginSuccess = true;
+                    SigninWindow *n = new SigninWindow();
+                    n->show();
+                    this->close();
+                } else {
+                    Lerror->setText("Login failed");
+                    Lerror->show();
+                }
+                client->deleteLater(); // آزاد کردن حافظه
+            });
+
+    client->connectToServer("127.0.0.1", 1029);
+
+    QJsonObject loginRequest;
+    loginRequest["action"] = "register";
+    loginRequest["username"] = txtusername->text();
+    loginRequest["password"] = client->hashPassword(txtpassword->text());
+    loginRequest["name"] = txtname->text();
+    loginRequest["lastname"] = txtlastname->text();
+    loginRequest["phone"] = txtphone->text();
+    loginRequest["email"] = txtemail->text();
+
+    client->sendRequest(loginRequest);
+
+    // در اینجا نمی‌توانیم مقدار را برگردانیم چون پاسخ هنوز دریافت نشده
+    // باید منتظر بمانیم تا سیگنال responseReceived فراخوانی شود
+    return false; // مقدار موقت
+}

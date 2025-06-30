@@ -42,7 +42,7 @@ QString User::getUsername()
     return Username;
 }
 
-QString User::getHashpasword()
+QString User::getHashPassword()
 {
     return HashedPassword;
 }

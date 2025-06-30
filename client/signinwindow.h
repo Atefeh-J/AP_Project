@@ -44,6 +44,7 @@ public:
     virtual void setObjects()override;
     //*bool ContainInvalidCh(QString str);
     //bool isEmptytxt(QString str);
+    bool onSigninButtonClicked();
 public slots:
     virtual void readInfo()override;
     virtual void gotowindow(int choice) override;

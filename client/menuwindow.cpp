@@ -63,13 +63,16 @@ void Menuwindow::gotowindow(int choice,Client *client)
         this->close();
     }
         break;
-    case 3:
-        break;
-    case 4:
+    case 3:{
+        HistoryWindow *n=new HistoryWindow(client);
+        n->show();
+        //this->close();
+        break;}
+    case 4:{
         Beginwindow *n=new Beginwindow(client);
         n->show();
         this->close();
-        break;
+        break;}
     }
 
 }

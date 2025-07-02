@@ -20,7 +20,7 @@
 #include "signinwindow.h"
 #include "forgotpswwindow.h"
 #include"menuwindow.h"
-#include"signupwindow.h"
+// #include"signupwindow.h"
 #include"editwindow.h"
 #include "mainwindow.h"
 #include"connectwindow.h"

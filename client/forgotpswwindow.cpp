@@ -11,15 +11,22 @@ Forgotpswwindow::~Forgotpswwindow()
 void Forgotpswwindow::setObjects(Client *client)
 {
         Lpagename = new QLabel("forgot password", this);
+        Lusername = new QLabel("enter your username", this);
+        txtusername = new QLineEdit(this);
         Lphone = new QLabel("enter your phonenumber", this);
         txtphone = new QLineEdit(this);
         pbnsign = new QPushButton("signin", this);
 
         // تنظیم موقعیت و اندازه مناسب
+        // int y=200;
+        // Lpagename->setGeometry(720, y, 200, 25);y=y+25+10;
+
         int y=200;
         Lpagename->setGeometry(720, y, 200, 25);y=y+25+10;
+        Lusername->setGeometry(600, y, 300, 25);y=y+25+5;
+        txtusername->setGeometry(600, y, 300, 40);y=y+40+10;
         Lphone->setGeometry(600, y, 300, 25);y=y+25+5;
-        txtphone->setGeometry(600, y, 300, 40);y=y+30+30;
+        txtphone->setGeometry(600, y, 300, 40);y=y+40+10;
         pbnsign->setGeometry(670, y, 150, 30);y=y+30+20;
 
         pbnsign->setStyleSheet("color: white; background: red;");
@@ -32,12 +39,12 @@ void Forgotpswwindow::setObjects(Client *client)
 void Forgotpswwindow::readInfo()
 {
     QString phone= txtphone->text();
-
-    if (isEmptytxt(phone))
+    QString username=txtusername->text();
+    if (isEmptytxt(phone)||isEmptytxt(username))
     {
         throw EmptyFieldException();
     }
-    if (ContainInvalidCh(phone))
+    if (ContainInvalidCh(phone)||ContainInvalidCh(username))
     {
         throw CharactersException();
     }
@@ -79,15 +86,50 @@ void Forgotpswwindow::gotowindow(int choice,Client *client)
     }
 
 }
-bool Forgotpswwindow::onSigninButtonClicked(Client *client) {
-    //Client *client = new Client(this);
-    bool loginSuccess = false; // حالت اولیه
+// bool Forgotpswwindow::onSigninButtonClicked(Client *client) {
+//     //Client *client = new Client(this);
+//     bool loginSuccess = false; // حالت اولیه
 
-    // اتصال سیگنال قبل از ارسال درخواست
+//     // اتصال سیگنال قبل از ارسال درخواست
+//     connect(client, &Client::responseReceived,
+//             [this, &loginSuccess, client](const QJsonObject &response) {
+//                 if (response["status"] == "success") {
+//                     loginSuccess = true;
+//                     Menuwindow *n = new Menuwindow(client);
+//                     n->show();
+//                     this->close();
+//                 } else {
+//                     Lerror->setText("Login failed");
+//                     Lerror->show();
+//                 }
+//                 client->deleteLater(); // آزاد کردن حافظه
+//             });
+
+//     //client->connectToServer("127.0.0.1", 1029);
+
+//     QJsonObject loginRequest;
+//     loginRequest["action"] = "resetpassword";
+//     loginRequest["phone"] = txtphone->text();
+
+//     client->sendRequest(loginRequest);
+
+//     // در اینجا نمی‌توانیم مقدار را برگردانیم چون پاسخ هنوز دریافت نشده
+//     // باید منتظر بمانیم تا سیگنال responseReceived فراخوانی شود
+//     return false; // مقدار موقت
+// }
+
+bool Forgotpswwindow::onSigninButtonClicked(Client *client) {
+    bool loginSuccess = false;
+
+    // قطع تمام اتصالات قبلی
+    disconnect(client, &Client::responseReceived, nullptr, nullptr);
+
+    // ایجاد اتصال جدید
     connect(client, &Client::responseReceived,
             [this, &loginSuccess, client](const QJsonObject &response) {
                 if (response["status"] == "success") {
                     loginSuccess = true;
+                    client->setUsername(txtusername->text());
                     Menuwindow *n = new Menuwindow(client);
                     n->show();
                     this->close();
@@ -95,46 +137,16 @@ bool Forgotpswwindow::onSigninButtonClicked(Client *client) {
                     Lerror->setText("Login failed");
                     Lerror->show();
                 }
-                client->deleteLater(); // آزاد کردن حافظه
             });
-
-    //client->connectToServer("127.0.0.1", 1029);
 
     QJsonObject loginRequest;
     loginRequest["action"] = "resetpassword";
     loginRequest["phone"] = txtphone->text();
-
+    loginRequest["username"] = txtusername->text();
     client->sendRequest(loginRequest);
 
-    // در اینجا نمی‌توانیم مقدار را برگردانیم چون پاسخ هنوز دریافت نشده
-    // باید منتظر بمانیم تا سیگنال responseReceived فراخوانی شود
-    return false; // مقدار موقت
+    return false;
 }
-
-// bool Forgotpswwindow::onSigninButtonClicked()
-// {
-//     Client *client = new Client(this); // ✅ استفاده از اشیاء روی heap
-
-//     // connect(client, &Client::responseReceived, [this](const QJsonObject &response) {
-//     //     qDebug() << "Server response:" << response;
-//     // });
-
-//     client->connectToServer("127.0.0.1", 1029);
-
-//     QJsonObject registerRequest;
-//     registerRequest["action"] = "resetpassword";
-//     registerRequest["phone"] = txtphone->text();
-
-//     client->sendRequest(registerRequest);
-
-//     connect(client, &Client::responseReceived, [this](const QJsonObject &response) {
-//         if (response["status"] == "success") {
-//             return true;
-//         } else {
-//             return false;
-//         }
-//     });
-// }
 
 // bool Forgotpswwindow::ContainInvalidCh(QString str)
 // {

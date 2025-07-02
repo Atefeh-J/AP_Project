@@ -22,6 +22,8 @@
 #include"editwindow.h"
 #include "mainwindow.h"
 #include "beginwindow.h"
+#include "HistoryWindow.h"
+
 class Menuwindow : public MainWindow
 {
     Q_OBJECT

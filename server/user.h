@@ -33,6 +33,12 @@ public:
     QString getLastname();
     QString getEmail();
     QVector<GameHistory> getGamehistory();
+    QString setUsername(QString data);
+    QString setHashPassword(QString data);
+    QString setPhone(QString data);
+    QString setName(QString data);
+    QString setLastname(QString data);
+    QString setEmail(QString data);
     // QString getDate(int index);
     // QString getOpponent();
     // QString getLevel1();

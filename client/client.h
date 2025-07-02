@@ -19,6 +19,9 @@ public:
     void sendRequest(const QJsonObject &request);
     QString hashPassword(const QString &password);
 
+    QString getUsername();
+    void setUsername(QString username);
+
 signals:
     void connected();
     void responseReceived(const QJsonObject &response);
@@ -30,6 +33,7 @@ private slots:
 
 private:
     QTcpSocket *socket;
+    QString Username;
 };
 
 #endif // CLIENT_H

@@ -98,9 +98,10 @@ void Editwindow::gotowindow(int choice,Client *client)
     {
         try{
             readInfo();
-            Menuwindow *n = new Menuwindow(client);
-            n->show();
-            this->close();
+            // Menuwindow *n = new Menuwindow(client);
+            // n->show();
+            // this->close();
+            onSignupButtonClicked(client);
         }
         catch (const MyException& e)
         {
@@ -113,8 +114,48 @@ void Editwindow::gotowindow(int choice,Client *client)
     }
 
 }
-// bool Signupwindow::onSignupButtonClicked() {
-//     Client *client = new Client(this);
+bool Editwindow::onSignupButtonClicked(Client *client) {
+    bool loginSuccess = false;
+
+    // قطع تمام اتصالات قبلی
+    disconnect(client, &Client::responseReceived, nullptr, nullptr);
+
+    // ایجاد اتصال جدید
+    connect(client, &Client::responseReceived,
+            [this, &loginSuccess, client](const QJsonObject &response) {
+         qDebug()<<"editon";
+                if (response["status"] == "success") {
+                    loginSuccess = true;
+                    if(!txtusername->text().isEmpty())
+                        client->setUsername(txtusername->text());
+                    Menuwindow *n = new Menuwindow(client);
+                    n->show();
+                    this->close();
+                } else {
+                    Lerror->setText("Login failed");
+                    Lerror->show();
+                }
+            });
+    QJsonObject loginRequest;
+    loginRequest["action"] = "editInfo";
+    loginRequest["recentusername"] = client->getUsername();
+    loginRequest["username"] = txtusername->text();
+    if(!txtpassword->text().isEmpty())
+        loginRequest["password"] = client->hashPassword(txtpassword->text());
+    else
+        loginRequest["password"]="";
+    loginRequest["name"] = txtname->text();
+    loginRequest["lastname"] = txtlastname->text();
+    loginRequest["phone"] = txtphone->text();
+    loginRequest["email"] = txtemail->text();
+
+    client->sendRequest(loginRequest);
+
+    return false;
+}
+
+// bool Editwindow::onSignupButtonClicked(Client *client) {
+//     //Client *client = new Client(this);
 //     bool loginSuccess = false; // حالت اولیه
 
 //     // اتصال سیگنال قبل از ارسال درخواست
@@ -122,7 +163,7 @@ void Editwindow::gotowindow(int choice,Client *client)
 //             [this, &loginSuccess, client](const QJsonObject &response) {
 //                 if (response["status"] == "success") {
 //                     loginSuccess = true;
-//                     SigninWindow *n = new SigninWindow();
+//                     Menuwindow *n = new Menuwindow(client);
 //                     n->show();
 //                     this->close();
 //                 } else {
@@ -132,12 +173,16 @@ void Editwindow::gotowindow(int choice,Client *client)
 //                 client->deleteLater(); // آزاد کردن حافظه
 //             });
 
-//     client->connectToServer("127.0.0.1", 1029);
-
+//     //client->connectToServer("127.0.0.1", 1029);
+//     qDebug()<<"editon";
 //     QJsonObject loginRequest;
-//     loginRequest["action"] = "register";
+//     loginRequest["action"] = "recentusername";
+//     loginRequest["recentusername"] = client->getUsername();
 //     loginRequest["username"] = txtusername->text();
-//     loginRequest["password"] = client->hashPassword(txtpassword->text());
+//     if(!txtpassword->text().isEmpty())
+//         loginRequest["password"] = client->hashPassword(txtpassword->text());
+//     else
+//         loginRequest["password"]="";
 //     loginRequest["name"] = txtname->text();
 //     loginRequest["lastname"] = txtlastname->text();
 //     loginRequest["phone"] = txtphone->text();

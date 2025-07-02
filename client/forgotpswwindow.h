@@ -28,7 +28,9 @@ class Forgotpswwindow : public MainWindow
     Q_OBJECT
 
     QLabel *Lpagename;
+    QLabel *Lusername;
     QLabel *Lphone;
+    QLineEdit *txtusername;
     QLineEdit *txtphone;
     QPushButton *pbnsign;
     //QLabel *Lerror;

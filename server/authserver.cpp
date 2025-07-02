@@ -37,7 +37,56 @@ bool AuthServer::authenticate(const QString &username, const QString &hashedPass
         qDebug() << "User not found:" << username;
         return false;
     }
+    qDebug()<<hashedPassword;
     return users[username]->getHashPassword() == hashedPassword;
+}
+
+bool AuthServer::editInfo(const QString &recentusername, const QString &username,
+                          const QString &hashedPassword, const QString &name,
+                          const QString &lastname, const QString &phone,
+                          const QString &email)
+{
+    qDebug() << "authEdit" << username << ' ' << recentusername;
+
+    // 1. بررسی وجود کاربر با نام قدیمی
+    if (!users.contains(recentusername)) {
+        qDebug() << "User not found:" << recentusername;
+        return false;
+    }
+
+    // 2. اگر نام کاربری تغییر کرده و نام جدید تکراری است
+    if (!username.isEmpty() && username != recentusername && users.contains(username)) {
+        qDebug() << "Username already exists:" << username;
+        return false;
+    }
+
+    User* user = users.value(recentusername);
+
+    // 3. اعمال تغییرات
+    if (!hashedPassword.isEmpty())
+        user->setHashPassword(hashedPassword);
+    if (!name.isEmpty())
+        user->setName(name);
+    if (!lastname.isEmpty())
+        user->setLastname(lastname);
+    if (!phone.isEmpty())
+        user->setPhone(phone);
+    if (!email.isEmpty())
+        user->setEmail(email);
+
+    // 4. اگر نام کاربری تغییر کرده
+    if (!username.isEmpty() && username != recentusername) {
+        // حذف از مپ با کلید قدیمی و اضافه با کلید جدید
+        users.remove(recentusername);
+        user->setUsername(username);
+        users.insert(username, user);
+    }
+
+    qDebug() << "saving changes...";
+    saveUserHistory();
+    qDebug() << "changes saved";
+
+    return true;
 }
 
 void AuthServer::notifyPlayersConnected()
@@ -60,13 +109,21 @@ void AuthServer::notifyPlayersConnected()
     }
 }
 
-bool AuthServer::resetPassword(const QString &phone, const QString &newPassword)
+bool AuthServer::resetPassword(const QString &username , const QString &phone)
 {
-    for (User *user : users) {
-        if (user->getPhone() == phone) {
-            //user->setPassword(newPassword);
-            //saveUserHistory();
-            return true;
+    // for (User *user : users) {
+    //     if (user->getPhone() == phone) {
+    //         //user->setPassword(newPassword);
+    //         //saveUserHistory();
+    //         return true;
+    //     }
+    // }
+    for(auto x:users)
+    {
+        if(x->getUsername()==username)
+        {
+            if(x->getPhone()==phone)
+                return true;
         }
     }
     return false;
@@ -181,10 +238,55 @@ void AuthServer::processRequest(QTcpSocket *socket, const QByteArray &data)
         };
     }
     else if (action == "resetpassword") {
+        bool success = resetPassword(
+            json["username"].toString(),
+            json["phone"].toString()
+            );
         response = {
-            {"status", "success"},
-            {"message", "Password reset initiated"}
+            {"status", success ? "success" : "failed"},
+            {"message", success ? "Password reset initiated": "Invalid credentials"}
         };
+    }
+    else if (action == "editInfo") {
+
+        bool success = editInfo(
+            json["recentusername"].toString(),
+            json["username"].toString(),
+            json["password"].toString(),
+            json["name"].toString(),
+            json["lastname"].toString(),
+            json["phone"].toString(),
+            json["email"].toString()
+            );
+        qDebug()<<success;
+        // QString recentusername;
+        // if(success&&!json["username"].toString().isEmpty())
+        //     recentusername=json["username"].toString();
+        // else
+        //     recentusername= json["recentusername"].toString();
+        response = {
+            {"status", success ? "success" : "failed"},
+            {"message", success ? "editInformation successful": "Edit failed"},
+            //{"recentusername",recentusername}
+        };
+    }
+    else if (action == "history") {
+        QJsonObject userObject;
+        QJsonArray historyArray;
+        QVector<GameHistory> gamehistory = users[json["reccentusername"].toString()]->getGamehistory();
+
+        for(const auto &historyItem : gamehistory) {
+            QJsonObject historyObj;
+            historyObj["Date"] = historyItem.Date;
+            historyObj["Opponent"] = historyItem.Opponent;
+            historyObj["Level1"] = historyItem.Level1;
+            historyObj["Level2"] = historyItem.Level2;
+            historyObj["Level3"] = historyItem.Level3;
+            historyObj["Result"] = historyItem.Result;
+            historyArray.append(historyObj);
+        }
+        userObject["History"] = historyArray;
+        response=userObject;
     }
     else {
         response = {

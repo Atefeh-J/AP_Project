@@ -69,6 +69,36 @@ QVector<GameHistory> User::getGamehistory()
 {
     return history;
 }
+QString User::setUsername(QString data)
+{
+    Username=data;
+}
+
+QString User::setHashPassword(QString data)
+{
+    HashedPassword=data;
+}
+
+QString User::setPhone(QString data)
+{
+    Phone=data;
+}
+
+QString User::setName(QString data)
+{
+    Name=data;
+}
+
+QString User::setLastname(QString data)
+{
+    Lastname=data;
+}
+
+QString User::setEmail(QString data)
+{
+    Email=data;
+}
+
 // QString User::getDate()
 // {
 //     return history[0].Date;

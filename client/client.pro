@@ -15,6 +15,7 @@ SOURCES += \
     editwindow.cpp \
     exceptions.cpp \
     forgotpswwindow.cpp \
+    historywindow.cpp \
     main.cpp \
     client.cpp \
     mainwindow.cpp \
@@ -29,6 +30,7 @@ HEADERS += \
     editwindow.h \
     exceptions.h \
     forgotpswwindow.h \
+    historywindow.h \
     mainwindow.h \
     menuwindow.h \
     signinwindow.h \

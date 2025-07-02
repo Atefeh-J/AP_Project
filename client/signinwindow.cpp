@@ -147,6 +147,7 @@ bool SigninWindow::onSigninButtonClicked(Client *client) {
             [this, &loginSuccess, client](const QJsonObject &response) {
                 if (response["status"] == "success") {
                     loginSuccess = true;
+                    client->setUsername(txtusername->text());
                     Menuwindow *n = new Menuwindow(client);
                     n->show();
                     this->close();

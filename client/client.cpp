@@ -52,3 +52,12 @@ QString Client::hashPassword(const QString &password)
 {
     return QCryptographicHash::hash(password.toUtf8(), QCryptographicHash::Sha256).toHex();
 }
+QString Client::getUsername()
+{
+    return Username;
+}
+
+void Client::setUsername(QString username)
+{
+    Username=username;
+}

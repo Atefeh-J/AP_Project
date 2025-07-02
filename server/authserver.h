@@ -8,7 +8,7 @@
 #include <QMutex>
 #include "user.h"
 #include "databasemanage.h"
-
+#include "user.h"
 class AuthServer : public QTcpServer
 {
     Q_OBJECT
@@ -21,7 +21,10 @@ public:
                       const QString &name, const QString &lastname,
                       const QString &phone, const QString &email);
     bool authenticate(const QString &username, const QString &hashedPassword);
-    bool resetPassword(const QString &phone, const QString &newPassword);
+    bool editInfo(const QString &recentusername,const QString &username, const QString &hashedPassword,
+                              const QString &name, const QString &lastname,
+                              const QString &phone, const QString &email);
+    bool resetPassword(const QString &username , const QString &phone);
     void saveUserHistory();
     void loadUserHistory();
     void notifyPlayersConnected();

@@ -48,6 +48,8 @@ public:
     Editwindow(Client *client,QString imagename=":/images/edit.jpg" ,MainWindow *parent = nullptr);
     ~Editwindow();
     virtual void setObjects(Client *client)override;
+    bool onSignupButtonClicked(Client *client);
+
     // bool ContainInvalidCh(QString str);
 //bool isEmptytxt(QString str);
 

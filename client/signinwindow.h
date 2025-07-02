@@ -21,6 +21,9 @@
 #include"signupwindow.h"
 #include"editwindow.h"
 #include"mainwindow.h"
+#include"connectwindow.h"
+//extern Client *client;
+
 class SigninWindow : public MainWindow
 {
     Q_OBJECT
@@ -39,14 +42,14 @@ class SigninWindow : public MainWindow
     QLineEdit *txtpassword;
 
 public:
-    SigninWindow(QString imagename=":/images/sign.jpg" ,MainWindow *parent = nullptr);
+    SigninWindow(Client *client,QString imagename=":/images/sign.jpg" ,MainWindow *parent = nullptr);
     ~SigninWindow();
-    virtual void setObjects()override;
+    virtual void setObjects(Client *client)override;
     //*bool ContainInvalidCh(QString str);
     //bool isEmptytxt(QString str);
-    bool onSigninButtonClicked();
+    bool onSigninButtonClicked(Client *client);
 public slots:
     virtual void readInfo()override;
-    virtual void gotowindow(int choice) override;
+    virtual void gotowindow(int choice,Client *client) override;
 };
 #endif // SIGNINWINDOW_H

@@ -1,14 +1,14 @@
 #include "signinwindow.h"
-SigninWindow::SigninWindow(QString imagename ,MainWindow *parent) : MainWindow(imagename,parent)
+SigninWindow::SigninWindow(Client *client,QString imagename ,MainWindow *parent) : MainWindow(imagename,parent)
 {
 
-    setObjects();
+    setObjects(client);
 
 }
 SigninWindow::~SigninWindow()
 {}
 
-void SigninWindow::setObjects()
+void SigninWindow::setObjects(Client *client)
 {
     Lpagename = new QLabel("sign in", this);
     Lusername = new QLabel("enter your username", this);
@@ -30,11 +30,11 @@ void SigninWindow::setObjects()
 
     pbnsign->setStyleSheet("color: white; background: red;");
 
-    connect(pbnsign, &QPushButton::clicked, this, [this]() {
-        gotowindow(1);
+    connect(pbnsign, &QPushButton::clicked, this, [this,client]() {
+        gotowindow(1,client);
     });
-    connect(pbnforgotpass, &QPushButton::clicked, this, [this]() {
-        gotowindow(2);
+    connect(pbnforgotpass, &QPushButton::clicked, this, [this,client]() {
+        gotowindow(2,client);
     });
 
     //QLineEdit* txtpassword = new QLineEdit(this);
@@ -64,7 +64,7 @@ void SigninWindow::readInfo()
     }
 }
 
-void SigninWindow::gotowindow(int choice)
+void SigninWindow::gotowindow(int choice,Client *client)
 {
     switch(choice)
     {
@@ -79,7 +79,7 @@ void SigninWindow::gotowindow(int choice)
             //     n->show();
             //     this->close();
             // }
-            onSigninButtonClicked();
+            onSigninButtonClicked(client);
         }
         catch (const MyException& e)
         {
@@ -93,7 +93,7 @@ void SigninWindow::gotowindow(int choice)
     case 2:
     {
         try{
-            Forgotpswwindow *n = new Forgotpswwindow();
+            Forgotpswwindow *n = new Forgotpswwindow(client);
             n->show();
             this->close();
         }
@@ -136,26 +136,25 @@ void SigninWindow::gotowindow(int choice)
 //         }
 //     });
 // }
-bool SigninWindow::onSigninButtonClicked() {
-    Client *client = new Client(this);
-    bool loginSuccess = false; // حالت اولیه
+bool SigninWindow::onSigninButtonClicked(Client *client) {
+    bool loginSuccess = false;
 
-    // اتصال سیگنال قبل از ارسال درخواست
+    // قطع تمام اتصالات قبلی
+    disconnect(client, &Client::responseReceived, nullptr, nullptr);
+
+    // ایجاد اتصال جدید
     connect(client, &Client::responseReceived,
             [this, &loginSuccess, client](const QJsonObject &response) {
                 if (response["status"] == "success") {
                     loginSuccess = true;
-                    Menuwindow *n = new Menuwindow();
+                    Menuwindow *n = new Menuwindow(client);
                     n->show();
                     this->close();
                 } else {
                     Lerror->setText("Login failed");
                     Lerror->show();
                 }
-                client->deleteLater(); // آزاد کردن حافظه
             });
-
-    client->connectToServer("127.0.0.1", 1029);
 
     QJsonObject loginRequest;
     loginRequest["action"] = "login";
@@ -164,7 +163,5 @@ bool SigninWindow::onSigninButtonClicked() {
 
     client->sendRequest(loginRequest);
 
-    // در اینجا نمی‌توانیم مقدار را برگردانیم چون پاسخ هنوز دریافت نشده
-    // باید منتظر بمانیم تا سیگنال responseReceived فراخوانی شود
-    return false; // مقدار موقت
+    return false;
 }

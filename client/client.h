@@ -15,7 +15,7 @@ class Client : public QObject
 
 public:
     explicit Client(QObject *parent = nullptr);
-    void connectToServer(const QString &host, quint16 port);
+    bool connectToServer(const QString &host, quint16 port);
     void sendRequest(const QJsonObject &request);
     QString hashPassword(const QString &password);
 

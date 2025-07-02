@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/new">
+        <file>serverconnect.jpg</file>
+        <file>table.png</file>
+        <file>gamename.jpg</file>
+    </qresource>
+</RCC>

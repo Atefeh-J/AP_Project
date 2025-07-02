@@ -30,12 +30,12 @@ class Beginwindow : public MainWindow
     QPushButton *pbnsignup;
 
 public:
-    Beginwindow(QString imagename=":/images/sign.jpg" ,MainWindow *parent = nullptr);
+    Beginwindow(Client *client,QString imagename=":/images/sign.jpg" ,MainWindow *parent = nullptr);
     ~Beginwindow();
-    virtual void setObjects()override;
+    virtual void setObjects(Client *client)override;
 public slots:
     virtual void readInfo()override;
-    virtual void gotowindow(int choice) override;
+    virtual void gotowindow(int choice,Client *client) override;
 
 };
 #endif // Beginwindow_H

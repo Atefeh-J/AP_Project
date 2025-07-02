@@ -308,9 +308,62 @@ int DetectWinner::compareSamePattern(Pattern pattern)
             }
             break;}
 
-        case DoublePair:
+        case DoublePair:{
+            QMap<int,int> e1,e2;
+            int maxc1,maxc2,minc1,minc2;
+            Card kiker1,kiker2;
+            for (int i = 0; i < 5; ++i)
+            {
+                if(++e1[Player1[i].getValue()]==2)
+                {
+                    if(maxc1<Player1[i].getValue())
+                    {
+                        minc1=maxc1;
+                        maxc1=Player1[i].getValue();
+                    }
+                    else
+                    {
+                        minc1=Player1[i].getValue();
+                    }
+                }
+                if(++e2[Player2[i].getValue()]==2)
+                {
+                    if(maxc2<Player2[i].getValue())
+                    {
+                        minc2=maxc2;
+                        maxc2=Player2[i].getValue();
+                    }
+                    else
+                    {
+                        minc2=Player2[i].getValue();
+                    }
+                }
+            }
+            if(maxc1>maxc2)
+                return 1;
+            if(maxc1<maxc2)
+                return 2;
+            if(minc1>minc2)
+                return 1;
+            if(minc1<minc2)
+                return 2;
+            for(int i=0;i<5;i++)
+            {
+                if(e1[Player1[i].getValue()]==1)
+                    kiker1=Player1[i];
+                if(e2[Player2[i].getValue()]==1)
+                    kiker2=Player2[i];
+            }
+            if(kiker1.getValue()>kiker2.getValue())
+                return 1;
+            if(kiker1.getValue()<kiker2.getValue())
+                return 2;
+            if(kiker1.getType()>kiker2.getType())
+                return 1;
+            if(kiker1.getType()<kiker2.getType())
+                return 2;
             ////////////////////////////////////////
-            break;
+            break;}
         case SinglePair:{
             QMap<int,int> e1,e2;
             int c1,c2;

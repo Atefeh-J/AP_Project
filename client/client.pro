@@ -11,6 +11,7 @@ CONFIG += link_pkgconfig
 
 SOURCES += \
     beginwindow.cpp \
+    connectwindow.cpp \
     editwindow.cpp \
     exceptions.cpp \
     forgotpswwindow.cpp \
@@ -24,6 +25,7 @@ SOURCES += \
 HEADERS += \
     beginwindow.h \
     client.h \
+    connectwindow.h \
     editwindow.h \
     exceptions.h \
     forgotpswwindow.h \

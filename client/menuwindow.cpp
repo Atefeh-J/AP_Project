@@ -1,14 +1,14 @@
 #include "Menuwindow.h"
-Menuwindow::Menuwindow(QString imagename ,MainWindow *parent) : MainWindow(imagename,parent)
+Menuwindow::Menuwindow(Client *client,QString imagename ,MainWindow *parent) : MainWindow(imagename,parent)
 {
 
-    setObjects();
+    setObjects(client);
 
 }
 Menuwindow::~Menuwindow()
 {}
 
-void Menuwindow::setObjects()
+void Menuwindow::setObjects(Client *client)
 {
     QTransform transform;
     transform.rotate(90);
@@ -33,23 +33,23 @@ void Menuwindow::setObjects()
     pbnhistory->setStyleSheet("color: white; background: red;");
     pbnsignout->setStyleSheet("color: white; background: red;");
 
-    connect(pbnstartgame, &QPushButton::clicked, this, [this]() {
-        gotowindow(1);
+    connect(pbnstartgame, &QPushButton::clicked, this, [this,client]() {
+        gotowindow(1,client);
     });
-    connect(pbneditinformation, &QPushButton::clicked, this, [this]() {
-        gotowindow(2);
+    connect(pbneditinformation, &QPushButton::clicked, this, [this,client]() {
+        gotowindow(2,client);
     });
-    connect(pbnhistory, &QPushButton::clicked, this, [this]() {
-        gotowindow(3);
+    connect(pbnhistory, &QPushButton::clicked, this, [this,client]() {
+        gotowindow(3,client);
     });
-    connect(pbnsignout, &QPushButton::clicked, this, [this]() {
-        gotowindow(4);
+    connect(pbnsignout, &QPushButton::clicked, this, [this,client]() {
+        gotowindow(4,client);
     });
 }
 void Menuwindow::readInfo()
 {}
 
-void Menuwindow::gotowindow(int choice)
+void Menuwindow::gotowindow(int choice,Client *client)
 {
     switch(choice)
     {
@@ -58,7 +58,7 @@ void Menuwindow::gotowindow(int choice)
         break;
     case 2:
     {
-        Editwindow *n = new Editwindow();
+        Editwindow *n = new Editwindow(client);
         n->show();
         this->close();
     }
@@ -66,7 +66,7 @@ void Menuwindow::gotowindow(int choice)
     case 3:
         break;
     case 4:
-        Beginwindow *n=new Beginwindow();
+        Beginwindow *n=new Beginwindow(client);
         n->show();
         this->close();
         break;

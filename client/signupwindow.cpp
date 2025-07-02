@@ -1,8 +1,8 @@
 #include "signupwindow.h"
-Signupwindow::Signupwindow(QString imagename ,MainWindow *parent) : MainWindow(imagename,parent)
+Signupwindow::Signupwindow(Client *client,QString imagename ,MainWindow *parent) : MainWindow(imagename,parent)
 {
 
-    setObjects();
+    setObjects(client);
 
 }
 Signupwindow::~Signupwindow()
@@ -10,7 +10,7 @@ Signupwindow::~Signupwindow()
 
 }
 
-void Signupwindow::setObjects()
+void Signupwindow::setObjects(Client *client)
 {
     Lpagename = new QLabel("sign up", this);
     Lusername = new QLabel("enter your username", this);
@@ -50,8 +50,8 @@ void Signupwindow::setObjects()
 
     pbnsignup->setStyleSheet("color: white; background: red;");
 
-    connect(pbnsignup, &QPushButton::clicked, this, [this]() {
-        gotowindow(1);
+    connect(pbnsignup, &QPushButton::clicked, this, [this,client]() {
+        gotowindow(1,client);
     });
 
     txtpassword->setEchoMode(QLineEdit::Password);
@@ -91,7 +91,7 @@ void Signupwindow::readInfo()
     // }
 }
 
-void Signupwindow::gotowindow(int choice)
+void Signupwindow::gotowindow(int choice,Client *client)
 {
     switch(choice)
     {
@@ -104,7 +104,7 @@ void Signupwindow::gotowindow(int choice)
             //     n->show();
             //     this->close();
             // }
-            onSignupButtonClicked();
+            onSignupButtonClicked(client);
         }
         catch (const MyException& e)
         {
@@ -155,8 +155,8 @@ void Signupwindow::gotowindow(int choice)
 //         }
 //     });
 // }
-bool Signupwindow::onSignupButtonClicked() {
-    Client *client = new Client(this);
+bool Signupwindow::onSignupButtonClicked(Client *client) {
+    //Client *client = new Client(this);
     bool loginSuccess = false; // حالت اولیه
 
     // اتصال سیگنال قبل از ارسال درخواست
@@ -164,7 +164,7 @@ bool Signupwindow::onSignupButtonClicked() {
             [this, &loginSuccess, client](const QJsonObject &response) {
                 if (response["status"] == "success") {
                     loginSuccess = true;
-                    SigninWindow *n = new SigninWindow();
+                    SigninWindow *n = new SigninWindow(client);
                     n->show();
                     this->close();
                 } else {
@@ -174,7 +174,7 @@ bool Signupwindow::onSignupButtonClicked() {
                 client->deleteLater(); // آزاد کردن حافظه
             });
 
-    client->connectToServer("127.0.0.1", 1029);
+    //client->connectToServer("127.0.0.1", 1029);
 
     QJsonObject loginRequest;
     loginRequest["action"] = "register";

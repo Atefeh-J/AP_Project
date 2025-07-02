@@ -16,7 +16,6 @@ SOURCES += \
     exceptions.cpp \
     main.cpp \
     mainwindow.cpp \
-    mythread.cpp \
     user.cpp
 
 HEADERS += \
@@ -26,7 +25,6 @@ HEADERS += \
     detectwinner.h \
     exceptions.h \
     mainwindow.h \
-    mythread.h \
     user.h
 
 FORMS += \
@@ -36,3 +34,6 @@ FORMS += \
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+RESOURCES += \
+    images.qrc

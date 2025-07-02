@@ -20,6 +20,9 @@
 #include"signupwindow.h"
 #include"editwindow.h"
 #include"mainwindow.h"
+#include"connectwindow.h"
+//extern Client *client;
+
 class Forgotpswwindow : public MainWindow
 {
     Q_OBJECT
@@ -30,16 +33,16 @@ class Forgotpswwindow : public MainWindow
     QPushButton *pbnsign;
     //QLabel *Lerror;
 public:
-    Forgotpswwindow(QString imagename=":/images/sign.jpg" ,MainWindow *parent = nullptr);
+    Forgotpswwindow(Client *client,QString imagename=":/images/sign.jpg" ,MainWindow *parent = nullptr);
     ~Forgotpswwindow();
-    void setObjects()override;
+    void setObjects(Client *client)override;
     // bool ContainInvalidCh(QString str);
     // bool isEmptytxt(QString str);
-    bool onSigninButtonClicked();
+    bool onSigninButtonClicked(Client *client);
 
 
 public slots:
     void readInfo() override;
-    void gotowindow(int choice) override;
+    void gotowindow(int choice,Client *client) override;
 };
 #endif // FORGOTPSWWINDOW_H

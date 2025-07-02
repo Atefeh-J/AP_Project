@@ -1,14 +1,14 @@
 #include "Editwindow.h"
-Editwindow::Editwindow(QString imagename ,MainWindow *parent) : MainWindow(imagename,parent)
+Editwindow::Editwindow(Client *client,QString imagename ,MainWindow *parent) : MainWindow(imagename,parent)
 {
 
-    setObjects();
+    setObjects(client);
 
 }
 Editwindow::~Editwindow()
 {}
 
-void Editwindow::setObjects()
+void Editwindow::setObjects(Client *client)
 {
     QTransform transform;
     transform.rotate(90);
@@ -55,8 +55,8 @@ void Editwindow::setObjects()
 
 
     //     connect(pbnsignup,SIGNAL(clicked()),this,SLOT(readInfo()));
-    connect(pbnsignup, &QPushButton::clicked, this, [this]() {
-        gotowindow(1);
+    connect(pbnsignup, &QPushButton::clicked, this, [this,client]() {
+        gotowindow(1,client);
     });
 
     txtpassword->setEchoMode(QLineEdit::Password);
@@ -90,7 +90,7 @@ void Editwindow::readInfo()
     // }
 }
 
-void Editwindow::gotowindow(int choice)
+void Editwindow::gotowindow(int choice,Client *client)
 {
     switch(choice)
     {
@@ -98,7 +98,7 @@ void Editwindow::gotowindow(int choice)
     {
         try{
             readInfo();
-            Menuwindow *n = new Menuwindow();
+            Menuwindow *n = new Menuwindow(client);
             n->show();
             this->close();
         }

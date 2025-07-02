@@ -28,13 +28,13 @@ public:
     MainWindow(QString imagename ,QWidget *parent = nullptr);
     ~MainWindow();
     void setBackground(QString imagename);
-    virtual void setObjects();
+    virtual void setObjects(Client *client);
     bool ContainInvalidCh(QString str);
     bool isEmptytxt(QString str);
 
 public slots:
     virtual void readInfo();
-    virtual void gotowindow(int choice);
+    virtual void gotowindow(int choice,Client *client);
 
 protected:
     QPixmap background;

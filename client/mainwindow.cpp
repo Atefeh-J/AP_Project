@@ -48,7 +48,7 @@ void MainWindow:: paintEvent(QPaintEvent* event)
     QWidget::paintEvent(event);
 }
 
-void MainWindow::setObjects()
+void MainWindow::setObjects(Client *client)
 {
 
 }
@@ -58,7 +58,7 @@ void MainWindow::readInfo()
 
 }
 
-void MainWindow::gotowindow(int choice)
+void MainWindow::gotowindow(int choice,Client *client)
 {
 
 }

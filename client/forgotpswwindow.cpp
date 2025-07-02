@@ -1,14 +1,14 @@
 #include "forgotpswwindow.h"
-Forgotpswwindow::Forgotpswwindow(QString imagename ,MainWindow *parent) : MainWindow(imagename,parent)
+Forgotpswwindow::Forgotpswwindow(Client *client,QString imagename ,MainWindow *parent) : MainWindow(imagename,parent)
 {
 
-    setObjects();
+    setObjects(client);
 
 }
 Forgotpswwindow::~Forgotpswwindow()
 {}
 
-void Forgotpswwindow::setObjects()
+void Forgotpswwindow::setObjects(Client *client)
 {
         Lpagename = new QLabel("forgot password", this);
         Lphone = new QLabel("enter your phonenumber", this);
@@ -25,8 +25,8 @@ void Forgotpswwindow::setObjects()
         pbnsign->setStyleSheet("color: white; background: red;");
 
 
-    connect(pbnsign, &QPushButton::clicked, this, [this]() {
-        gotowindow(1);
+    connect(pbnsign, &QPushButton::clicked, this, [this,client]() {
+        gotowindow(1,client);
     });
 }
 void Forgotpswwindow::readInfo()
@@ -51,7 +51,7 @@ void Forgotpswwindow::readInfo()
     }
 }
 
-void Forgotpswwindow::gotowindow(int choice)
+void Forgotpswwindow::gotowindow(int choice,Client *client)
 {
     switch(choice)
     {
@@ -59,12 +59,12 @@ void Forgotpswwindow::gotowindow(int choice)
     {
         try{
             readInfo();
-            // if(onSigninButtonClicked()){
-            //     Menuwindow *n = new Menuwindow();
+            // if(onSigninButtonClicked(client)){
+            //     Menuwindow *n = new Menuwindow(client);
             //     n->show();
             //     this->close();
             // }
-            onSigninButtonClicked();
+            onSigninButtonClicked(client);
         }
 
         catch (const MyException& e)
@@ -79,8 +79,8 @@ void Forgotpswwindow::gotowindow(int choice)
     }
 
 }
-bool Forgotpswwindow::onSigninButtonClicked() {
-    Client *client = new Client(this);
+bool Forgotpswwindow::onSigninButtonClicked(Client *client) {
+    //Client *client = new Client(this);
     bool loginSuccess = false; // حالت اولیه
 
     // اتصال سیگنال قبل از ارسال درخواست
@@ -88,7 +88,7 @@ bool Forgotpswwindow::onSigninButtonClicked() {
             [this, &loginSuccess, client](const QJsonObject &response) {
                 if (response["status"] == "success") {
                     loginSuccess = true;
-                    Menuwindow *n = new Menuwindow();
+                    Menuwindow *n = new Menuwindow(client);
                     n->show();
                     this->close();
                 } else {
@@ -98,7 +98,7 @@ bool Forgotpswwindow::onSigninButtonClicked() {
                 client->deleteLater(); // آزاد کردن حافظه
             });
 
-    client->connectToServer("127.0.0.1", 1029);
+    //client->connectToServer("127.0.0.1", 1029);
 
     QJsonObject loginRequest;
     loginRequest["action"] = "resetpassword";

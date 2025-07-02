@@ -45,15 +45,15 @@ class Editwindow : public MainWindow
     //QLabel *Lerror;
 
 public:
-    Editwindow(QString imagename=":/images/edit.jpg" ,MainWindow *parent = nullptr);
+    Editwindow(Client *client,QString imagename=":/images/edit.jpg" ,MainWindow *parent = nullptr);
     ~Editwindow();
-    virtual void setObjects()override;
+    virtual void setObjects(Client *client)override;
     // bool ContainInvalidCh(QString str);
 //bool isEmptytxt(QString str);
 
 public slots:
     virtual void readInfo()override;
-    virtual void gotowindow(int choice) override;
+    virtual void gotowindow(int choice,Client *client) override;
 
 };
 #endif // Editwindow_H

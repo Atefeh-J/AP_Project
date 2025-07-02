@@ -1,4 +1,3 @@
-
 #include "client.h"
 
 Client::Client(QObject *parent) : QObject(parent)
@@ -8,27 +7,30 @@ Client::Client(QObject *parent) : QObject(parent)
     connect(socket, &QTcpSocket::errorOccurred, this, &Client::onError);
 }
 
-void Client::connectToServer(const QString &host, quint16 port)
+bool Client::connectToServer(const QString &host, quint16 port)
 {
 
     socket->connectToHost(host, port);
     if (socket->waitForConnected(3000)) {
         qDebug()<<"connected";
+        return true;
         //emit connected();
     } else {
         qDebug()<<"connected failed";
+        return false;
         //emit errorOccurred("Connection failed: " + socket->errorString());
     }
 }
 
 void Client::sendRequest(const QJsonObject &request)
 {
+    qDebug()<<"wr";
     if (socket->state() == QTcpSocket::ConnectedState) {
         QByteArray data = QJsonDocument(request).toJson();
         socket->write(data);
         qDebug()<<"wrote\n"<<request;
     } else {
-        emit errorOccurred("Not connected to server");
+        qDebug()<< "Not connected to server";
     }
 }
 

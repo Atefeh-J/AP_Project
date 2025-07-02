@@ -15,6 +15,7 @@
 #include <QPushButton>
 #include <QVBoxLayout>
 
+#include"client.h"
 #include "exceptions.h"
 #include "signinwindow.h"
 #include "forgotpswwindow.h"
@@ -22,6 +23,9 @@
 #include"signupwindow.h"
 #include"editwindow.h"
 #include "mainwindow.h"
+#include"connectwindow.h"
+
+//extern Client *client;
 class Signupwindow : public MainWindow
 {
     Q_OBJECT
@@ -45,16 +49,16 @@ class Signupwindow : public MainWindow
 
 
 public:
-    Signupwindow(QString imagename=":/images/sign.jpg" ,MainWindow *parent = nullptr);
+    Signupwindow(Client *client,QString imagename=":/images/sign.jpg" ,MainWindow *parent = nullptr);
     ~Signupwindow();
-    virtual void setObjects()override;
+    virtual void setObjects(Client *client)override;
     // bool ContainInvalidCh(QString str);
     // bool isEmptytxt(QString str);
-    bool onSignupButtonClicked();
+    bool onSignupButtonClicked(Client *client);
 
 public slots:
     virtual void readInfo()override;
-    virtual void gotowindow(int choice) override;
+    virtual void gotowindow(int choice,Client *client) override;
 
 };
 #endif // Signupwindow_H

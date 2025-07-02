@@ -93,9 +93,9 @@
 //     //     Card(4,4)
 //     // };
 //     QVector<Card> player1 = {
-//         Card(2,3),
+//         Card(1,3),
 //         Card(1,2),
-//         Card(13,4),
+//         Card(11,4),
 //         Card(11,2),
 //         Card(10,4)
 //     };
@@ -108,9 +108,9 @@
 //     //     Card(5,1)
 //     // };
 //     QVector<Card> player2 = {
-//          Card(2,1),
+//          Card(1,1),
 //          Card(1,3),
-//          Card(13,3),
+//          Card(11,3),
 //          Card(11,1),
 //          Card(10,2)
 //     };
@@ -122,14 +122,31 @@
 
 //     return a.exec();
 // }
-#include <QCoreApplication>
+// #include <QCoreApplication>
+// #include "authserver.h"
+// #include"mainwindow.h"
+// int main(int argc, char *argv[])
+// {
+//     QCoreApplication a(argc, argv);
+//     QMap<QString, User*> u;
+//     qDebug()<<"hi";
+//     AuthServer server;
+//     server.startServer();
+//     MainWindow w;
+//     w.show();
+//     return a.exec();
+// }
+#include <QApplication>  // ✅ درست است
 #include "authserver.h"
-int main(int argc, char *argv[])
-{
-    QCoreApplication a(argc, argv);
-    QMap<QString, User*> u;
-    qDebug()<<"hi";
+#include "mainwindow.h"
+
+int main(int argc, char *argv[]) {
+    QApplication a(argc, argv);  // ✅ درست است
+    //QMap<QString, User*> u;
+    // qDebug() << "hi";
     AuthServer server;
     server.startServer();
+    MainWindow w;
+    w.show();
     return a.exec();
 }

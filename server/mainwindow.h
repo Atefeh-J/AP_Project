@@ -1,24 +1,41 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include <QMainWindow>
-#include "databasemanage.h"
-#include "user.h"
-QT_BEGIN_NAMESPACE
-namespace Ui {
-class MainWindow;
-}
-QT_END_NAMESPACE
+#include <QWidget>
+#include <QLabel>
+#include <QKeyEvent>
+#include <QPainter>
+#include <QMovie>
+#include <QTransform>
+#include <QTimer>
+#include<QVector>
+#include <QGraphicsOpacityEffect>
+#include <QTextEdit>
+#include <QPushButton>
+#include <QVBoxLayout>
+#include<QMessageBox>
 
-class MainWindow : public QMainWindow
+class MainWindow : public QWidget
 {
     Q_OBJECT
 
-public:
-    MainWindow(QWidget *parent = nullptr);
-    ~MainWindow();
+    // protected:
+    //     QPixmap background;
+    //     //QLabel *Lerror;
 
-private:
-    Ui::MainWindow *ui;
+public:
+    MainWindow(QString imagename=":/new/serverconnect.jpg" ,QWidget *parent = nullptr);
+    ~MainWindow();
+    void setBackground(QString imagename);
+    virtual void setObjects();
+
+public slots:
+    //virtual void readInfo();
+    //virtual void gotowindow(int choice,Client *client);
+
+protected:
+    QPixmap background;
+    QLabel *Lerror;
+    void paintEvent(QPaintEvent* event) override;
 };
 #endif // MAINWINDOW_H

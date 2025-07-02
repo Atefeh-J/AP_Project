@@ -34,12 +34,12 @@ class Menuwindow : public MainWindow
     //QLabel *Lerror;
 
 public:
-    Menuwindow(QString imagename=":/images/menu.jpg" ,MainWindow *parent = nullptr);
+    Menuwindow(Client *client,QString imagename=":/images/menu.jpg" ,MainWindow *parent = nullptr);
     ~Menuwindow();
-    virtual void setObjects()override;
+    virtual void setObjects(Client *client)override;
 public slots:
     virtual void readInfo()override;
-    virtual void gotowindow(int choice) override;
+    virtual void gotowindow(int choice,Client *client) override;
 
 };
 #endif // Menuwindow_H

@@ -14,3 +14,9 @@ int Card::getType() const
 {
     return Type;
 }
+Card& Card::operator=(const Card & v)
+{
+    Value=v.getValue();
+    Type=v.getType();
+    return *this;
+}

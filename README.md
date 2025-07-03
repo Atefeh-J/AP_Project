@@ -57,11 +57,26 @@ player registration, login, match history, pause/resume, smart card handling, an
 
 Some pictures of the game:
 
+Welcome Screen
 ![Welcome Screen](background.png)
+
+Loser Screen
 ![Loser Screen](loser.png)
+
+Winner Screen
 ![Winner Screen](winner.png)
+
+Next Round Screen
 ![Next Round Screen](round.png)
+
+Bitcoin Coin Card
 ![Bitcoin Coin Card](Coin-14.JPG)
+
+Bitcoin Dollar Card
 ![Bitcoin Dollar Card](Dollar-14.JPG)
+
+Bitcoin Gold Card
 ![Bitcoin Gold Card](Gold-14.JPG)
+
+Bitcoin Diamond Card
 ![Bitcoin Diamond Card](Dimond-14.JPG)
